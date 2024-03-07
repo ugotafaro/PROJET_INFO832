@@ -56,7 +56,7 @@ public class RandomTimer implements Timer {
 		}
 	}
 	/**
-	 * @param min/max constraint
+	 * @param hilim/max constraint
 	 * @throws Exception 
 	 */
 	public RandomTimer(randomDistribution distribution, int lolim, int hilim) throws Exception{
