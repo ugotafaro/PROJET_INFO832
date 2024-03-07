@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57e96b1e-865a-4a4e-a8a0-c9ee46a7d179" name="Changes" comment="[JAVADOC]">
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/xd.lck" beforeDir="false" />
-    </list>
+    <list default="true" id="57e96b1e-865a-4a4e-a8a0-c9ee46a7d179" name="Changes" comment="[IDEA]" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -154,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709805460803</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="[IDEA]">
+      <option name="closed" value="true" />
+      <created>1709805544941</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1709805544941</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,6 +185,7 @@
     <MESSAGE value="[GITIGNORE]" />
     <MESSAGE value="[MAVEN] Updating maven-compiler-plugin" />
     <MESSAGE value="[JAVADOC]" />
-    <option name="LAST_COMMIT_MESSAGE" value="[JAVADOC]" />
+    <MESSAGE value="[IDEA]" />
+    <option name="LAST_COMMIT_MESSAGE" value="[IDEA]" />
   </component>
 </project>
