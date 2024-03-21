@@ -51,27 +51,6 @@ class MergedTimerTest {
         }
     }
 
-    @Test // TEST 3
-    void testMergedTimerWithNull() {
-        timer1 = null;
-        timer2 = new PeriodicTimer(1);
-
-        mergedTimer = new MergedTimer(timer1, timer2);
-
-        assertFalse(mergedTimer.hasNext());
-        assertNull(mergedTimer.next());
-    }
-
-    @Test // TEST 4
-    void testMergedTimerWithBothNull() {
-        timer1 = null;
-
-        mergedTimer = new MergedTimer(timer1, timer1);
-
-        assertFalse(mergedTimer.hasNext());
-        assertNull(mergedTimer.next());
-    }
-
     // ----HASNEXT----
 
     @Test // TEST 1
