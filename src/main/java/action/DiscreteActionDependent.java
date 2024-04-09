@@ -90,7 +90,8 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 		for (Iterator<DiscreteAction> iter = this.depedentActions.iterator(); iter.hasNext(); ) {
 		    DiscreteAction element = iter.next();
 		    //element.updateTimeLaps();
-		}		
+		}
+
 	}
 	
 	public void nextMethod(){

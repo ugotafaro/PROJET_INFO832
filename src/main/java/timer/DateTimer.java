@@ -5,7 +5,8 @@ import java.util.TreeSet;
 import java.util.Vector;
 
 public class DateTimer  implements Timer {
-	
+
+
 	Vector<Integer> lapsTimes;
 	Iterator<Integer> it;
 	

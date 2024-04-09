@@ -9,9 +9,13 @@ target/
 .idea/compiler.xml
 .idea/libraries/
 .idea/sonarlint
+.idea/copilot
 *.iws
 *.iml
 *.ipr
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/misc.xml
 
 ### Eclipse ###
 .apt_generated
