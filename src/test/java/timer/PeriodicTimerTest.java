@@ -35,13 +35,4 @@ class PeriodicTimerTest {
         assertEquals(period, periodicTimer.getPeriod());
         assertEquals(period, periodicTimer.next());
     }
-
-    // ----HASNEXT----
-
-    @Test // TEST 1
-    void testHasNextWithValidValue() {
-
-    }
-
-
 }
