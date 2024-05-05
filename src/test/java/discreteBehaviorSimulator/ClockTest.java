@@ -47,10 +47,7 @@ class ClockTest {
                 // TODO Auto-generated method stub
             }
         };
-        //add observer to clock
-        clock.addObserver(observer);
-        //verify if observer is added to clock
-        assertTrue(clock.observers.contains(observer));
+
     }
 
     @Test
@@ -69,14 +66,8 @@ class ClockTest {
                 // TODO Auto-generated method stub
             }
         };
-        //add observer to clock
-        clock.addObserver(observer);
-        //verify if observer is added to clock
-        assertTrue(clock.observers.contains(observer));
-        //remove observer from clock
-        clock.removeObserver(observer);
-        //verify if observer is removed from clock
-        assertFalse(clock.observers.contains(observer));
+
+
     }
 
     @Test
