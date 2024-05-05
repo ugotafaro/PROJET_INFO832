@@ -145,5 +145,6 @@ class MergedTimerTest {
 
         assertEquals(2, mergedTimer.next());
         assertNull(mergedTimer.next());
+        // test
     }
 }
