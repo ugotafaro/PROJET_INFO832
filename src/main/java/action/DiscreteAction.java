@@ -14,7 +14,6 @@ import timer.Timer;
 /**
  * @author Tiphaine Bulou (2016)
  * @author Flavien Vernier
- * prout
  *
  */
 
@@ -94,6 +93,9 @@ public class DiscreteAction implements DiscreteActionInterface {
 
 	// COMPARAISON
 	public int compareTo(DiscreteActionInterface c) {
+		/**
+		 * javadoc
+		 */
 		if (this.lapsTime == null) { // no lapstime is equivalent to infinity 
 			return 1;
 		}
