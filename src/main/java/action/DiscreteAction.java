@@ -21,8 +21,12 @@ import timer.Timer;
 public class DiscreteAction implements DiscreteActionInterface {
 	private Object object;
 	private Method method;
-	
-	
+
+
+	public Timer getTimmer() {
+		return timmer;
+	}
+
 	private Timer timmer;				// timer provides new lapsTime
 	//private TreeSet<Integer> dates;	// obsolete, managed in timer 
 	//private Vector<Integer> lapsTimes;// obsolete, managed in timer
