@@ -10,7 +10,17 @@ public class Clock {
 	private static Clock instance = null;
 	
 	private int time;
+
+	public int getNextJump() {
+		return nextJump;
+	}
+
 	private int nextJump;
+
+	public Set<ClockObserver> getObservers() {
+		return observers;
+	}
+
 	private ReentrantReadWriteLock lock;
 	private boolean virtual;
 	
