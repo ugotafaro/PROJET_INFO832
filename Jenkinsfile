@@ -21,11 +21,11 @@ pipeline {
                     sh "test -f pom.xml"
                 }
             }
-//             post {
-//                 always {
-//                     junit 'target/surefire-reports/*.xml'
-//                 }
-//             }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
 
         }
         stage('Javadoc') {
