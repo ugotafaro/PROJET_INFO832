@@ -40,13 +40,13 @@ pipeline {
 
         stage('SonarCube') {
             steps {
-            withSonarQubeEnv(installationName: "server-sonar-alexis") {
-                sh "${maven}/bin/mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.10.0.2594:sonar"
-            }
-//                 sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sat_refactory -Dsonar.host.url=http://gpu-epu.univ-savoie.fr:9000 -Dsonar.login=sqp_881fa0b81b8cc8ab12afeaf1206b6b6518d5fec3"
-//                 script {
-//                     def maven = tool 'Maven'
-//                 }
+//             withSonarQubeEnv(installationName: "server-sonar-alexis") {
+//                 sh "${maven}/bin/mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.10.0.2594:sonar"
+//             }
+                sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sat_refactory -Dsonar.host.url=http://gpu-epu.univ-savoie.fr:9000 -Dsonar.login=sqa_ba53a54bf38616fec9572cda5cc21b1345ef6463"
+                script {
+                    def maven = tool 'Maven'
+                }
             }
         }
     }
