@@ -31,14 +31,12 @@ public class LogFormatter  extends Formatter {
 	    return date_format.format(resultdate);
 	  }
 
-	  // this method is called just after the handler using this
-	  // formatter is created
+
 	  public String getHead(Handler h) {
 		  return "";
 	  }
 	  
-	// this method is called just after the handler using this
-	  // formatter is closed
+
 	  public String getTail(Handler h) {
 	    return "";
 	  }
