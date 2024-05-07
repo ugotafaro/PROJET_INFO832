@@ -37,14 +37,23 @@ pipeline {
             }
         }
 
-
-        stage('SonarCube') {
-            steps {
-                script {
-                    def maven = tool 'Maven'
-                    sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sat_refactory -Dsonar.host.url=http://gpu-epu.univ-savoie.fr:9000 -Dsonar.login=sqa_ba53a54bf38616fec9572cda5cc21b1345ef6463"
-                }
+//
+//         stage('SonarCube') {
+//             steps {
+//                 script {
+//                     def maven = tool 'Maven'
+//                     sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sat_refactory -Dsonar.host.url=http://gpu-epu.univ-savoie.fr:9000 -Dsonar.login=sqa_ba53a54bf38616fec9572cda5cc21b1345ef6463"
+//                 }
+//             }
+//         }
+          stage('SCM') {
+            checkout scm
+          }
+          stage('SonarQube Analysis') {
+            def mvn = tool 'Default Maven';
+            withSonarQubeEnv() {
+              sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=groupe2"
             }
-        }
+          }
     }
 }
