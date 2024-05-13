@@ -50,7 +50,7 @@ pipeline {
             checkout scm
           }
           stage('SonarQube Analysis') {
-            def mvn = tool 'Default Maven';
+            def maven = tool 'Maven';
             withSonarQubeEnv() {
               sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=groupe2"
             }
