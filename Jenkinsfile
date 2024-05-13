@@ -47,12 +47,16 @@ pipeline {
 //             }
 //         }
           stage('SCM') {
-            checkout scm
+            steps {
+              checkout scm
+            }
           }
           stage('SonarQube Analysis') {
-            def maven = tool 'Maven';
-            withSonarQubeEnv() {
-              sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=groupe2"
+            steps {
+              def maven = tool 'Maven';
+              withSonarQubeEnv() {
+                sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=groupe2"
+              }
             }
           }
     }
