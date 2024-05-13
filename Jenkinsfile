@@ -53,10 +53,12 @@ pipeline {
           }
           stage('SonarQube Analysis') {
             steps {
+            script {
               def maven = tool 'Maven';
-              withSonarQubeEnv() {
+              withSonarQubeEnv("http://gpu-epu.univ-savoie.fr:9000") {
                 sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=groupe2"
               }
+            }
             }
           }
     }
