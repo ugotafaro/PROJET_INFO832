@@ -32,16 +32,23 @@ pipeline {
             steps {
                 script {
                     def maven = tool 'Maven'
-                    sh "${maven}/bin/mvn javadoc:javadoc"
+                    sh "${maven}/bin/mvn javadoc:javadoc -DreportDir=target/site/apidocs"
                 }
             }
         }
 
-        stage('SonarCube') {
+        stage('SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('SonarQube Analysis') {
             steps {
                 script {
-                    def maven = tool 'Maven'
-                    sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sat_refactory -Dsonar.host.url=http://gpu-epu.univ-savoie.fr:9000 -Dsonar.login=sqp_881fa0b81b8cc8ab12afeaf1206b6b6518d5fec3"
+                    def maven = tool 'Maven';
+                    withSonarQubeEnv(installationName: "server-sonar-alexis") {
+                        sh "${maven}/bin/mvn sonar:sonar -Dsonar.host.url=http://gpu-epu.univ-savoie.fr:9000 -Dsonar.projectKey=groupe2 -Dsonar.login=groupe2 -Dsonar.password=groupe2 -Dsonar.java.binaries=target/classes"
+                    }
                 }
             }
         }
