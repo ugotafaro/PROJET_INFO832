@@ -46,20 +46,20 @@ pipeline {
 //                 }
 //             }
 //         }
-          stage('SCM') {
+//         stage('SCM') {
+//             steps {
+//                 checkout scm
+//             }
+//         }
+        stage('SonarQube Analysis') {
             steps {
-              checkout scm
+                script {
+                    def maven = tool 'Maven';
+                    withSonarQubeEnv("server-sonar-alexis") {
+                        sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.token=sqp_94c9cf65fa929f3801a9348974d4b03240173f8d"
+                    }
+                }
             }
-          }
-          stage('SonarQube Analysis') {
-            steps {
-            script {
-              def maven = tool 'Maven';
-              withSonarQubeEnv("server-sonar-alexis") {
-                sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.token=sqp_94c9cf65fa929f3801a9348974d4b03240173f8d"
-              }
-            }
-            }
-          }
+        }
     }
 }
