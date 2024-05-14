@@ -159,29 +159,6 @@ class RandomTimerTest {
 
 
 
-
-
-
-    @Test
-    void string2Distribution() {
-    }
-
-    @Test
-    void distribution2String() {
-    }
-
-    @Test
-    void getDistribution() {
-    }
-
-    @Test
-    void getDistributionParam() {
-    }
-
-    @Test
-    void getMean() {
-    }
-
     @Test
     void testToStringWithExpDistribution() {
 
