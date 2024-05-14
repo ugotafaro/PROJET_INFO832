@@ -56,7 +56,7 @@ pipeline {
                 script {
                     def maven = tool 'Maven';
                     withSonarQubeEnv(installationName: "server-sonar-alexis") {
-                        sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.java.binaries=target/classes"
+                        sh "${maven}/bin/mvn sonar:sonar -Dsonar.host.url=http://gpu-epu.univ-savoie.fr:9000 -Dsonar.projectKey=groupe2 -Dsonar.login=groupe2 -Dsonar.password=groupe2 -Dsonar.java.binaries=target/classes"
                     }
                 }
             }
