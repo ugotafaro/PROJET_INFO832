@@ -5,31 +5,8 @@ public class TimeBoundedTimer implements Timer {
 	private Timer timer2bound;
 	private Integer startTime;
 
-	public Integer getNext() {
-		return next;
-	}
-
-	public boolean isHasNext() {
-		return hasNext;
-	}
-
-	public Timer getTimer2bound() {
-		return timer2bound;
-	}
 
 	private Integer stopTime;
-
-	public Integer getStartTime() {
-		return startTime;
-	}
-
-	public Integer getStopTime() {
-		return stopTime;
-	}
-
-	public int getTime() {
-		return time;
-	}
 
 	private Integer next=0;
 	private int time=0;
