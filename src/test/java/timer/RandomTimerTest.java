@@ -185,28 +185,28 @@ class RandomTimerTest {
     @Test
     void testToStringWithExpDistribution() {
 
-        assertEquals("EXP rate: 0.5", expTimer.toString());
+        assertEquals("EXP rate:0.5", expTimer.toString());
 
     }
 
     @Test
     void testToStringWithPoissonDistribution() {
 
-        assertEquals("POISSON mean: 5.0", poissonTimer.toString());
+        assertEquals("POISSON mean:5.0", poissonTimer.toString());
 
     }
 
     @Test
     void testToStringWithPosibilistDistribution() {
 
-        assertEquals("POSIBILIST lolim: 10 hilim: 20", posibilistTimer.toString());
+        assertEquals("POSIBILIST lolim:10 hilim:20", posibilistTimer.toString());
 
     }
 
     @Test
     void testToStringWithGaussianDistribution() {
 
-        assertEquals("GAUSSIAN lolim: 10 hilim: 20", gaussianTimer.toString());
+        assertEquals("GAUSSIAN lolim:10 hilim:20", gaussianTimer.toString());
 
     }
 
