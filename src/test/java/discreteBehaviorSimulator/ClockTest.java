@@ -79,7 +79,6 @@ class ClockTest {
             }
         };
 
-        // Add the observer to the clock
         clock.addObserver(observer);
 
         clock.removeObserver(observer);
@@ -122,24 +121,18 @@ class ClockTest {
 
     @Test
     void isVirtual() {
-        //test si la valeur de virtual est bien retourné
-        // Check if the virtual attribute is true by default
         assertTrue(clock.isVirtual(), "The virtual attribute should be true by default");
 
-        // Set the virtual attribute to false
         clock.setVirtual(false);
 
-        // Check if the virtual attribute is false
         assertFalse(clock.isVirtual(), "The virtual attribute should be false");
     }
 
     @Test
     void setNextJump() {
-        //test si la valeur de nextJump est bien retourné
-        // Set the nextJump attribute to 5
+
         clock.setNextJump(5);
 
-        // Check if the nextJump attribute was set correctly
         //assertEquals(5, clock.getNextJump(), "The nextJump attribute should be set to 5");
 
 
@@ -147,31 +140,22 @@ class ClockTest {
 
     @Test
     void increase() throws Exception {
-        // Verify the initial time is 0
         assertEquals(0, clock.getTime(), "Initial time should be 0");
 
-        // Increase the time by 10, which is the next jump
         clock.increase(10);
 
-        // Verify the time has increased correctly
         assertEquals(10, clock.getTime(), "Time should be increased by 10");
 
-        // Verify that the observer's `clockChange` method was called with the correct time
         assertEquals(10, observer.getObservedTime(), "Observer should receive updated time of 10");
 
-        // Now set a new next jump
         clock.setNextJump(15);
 
-        // Increase the time by 15, which is the next jump
         clock.increase(15);
 
-        // Verify the time has increased correctly again
         assertEquals(25, clock.getTime(), "Time should be increased by 15 more, making it 25");
 
-        // Verify that the observer's `clockChange` method was called with the correct time again
         assertEquals(25, observer.getObservedTime(), "Observer should receive updated time of 25");
 
-        // Test to increase the time by a value that is not equal to the next jump
         Clock clock = Clock.getInstance();
         clock.setNextJump(10); // Set nextJump to 10
         assertThrows(Exception.class, () -> {
