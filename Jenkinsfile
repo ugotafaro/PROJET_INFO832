@@ -55,7 +55,7 @@ pipeline {
             steps {
                 script {
                     def maven = tool 'Maven';
-                    withSonarQubeEnv("server-sonar-alexis") {
+                    withSonarQubeEnv(credentialsId: 'INFO832-Alexis', installationName: 'server-sonar-alexis') {
                         sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.token=sqp_94c9cf65fa929f3801a9348974d4b03240173f8d"
                     }
                 }
