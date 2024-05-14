@@ -56,7 +56,7 @@ pipeline {
                 script {
                     def maven = tool 'Maven';
                     withSonarQubeEnv(installationName: "server-sonar-alexis") {
-                        sh "${maven}/bin/mvn clean sonar:sonar"
+                        sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.java.binaries=target/classes"
                     }
                 }
             }
