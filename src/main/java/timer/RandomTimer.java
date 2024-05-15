@@ -59,7 +59,7 @@ public class RandomTimer implements Timer {
 	 * @param hilim/max constraint
 	 * @throws Exception 
 	 */
-	public RandomTimer(randomDistribution distribution, int lolim, int hilim) throws Exception{
+	public RandomTimer(randomDistribution distribution, double lolim, double hilim) throws Exception{
 		if(distribution == randomDistribution.POSIBILIST || distribution == randomDistribution.GAUSSIAN){
 			this.distribution = distribution;
 			this.mean = lolim + (hilim - lolim)/2;

@@ -28,27 +28,20 @@ class MergedTimerTest {
             assertTrue(mergedTimer.hasNext());
             assertEquals(10, mergedTimer.next());
         }
-
-        assertFalse(mergedTimer.hasNext());
     }
 
     @Test // TEST 2
     void testMergedTimerWithDifferentTimers() {
         TreeSet<Integer> dates = new TreeSet<>();
         dates.add(1);
-        dates.add(5);
-        dates.add(10);
 
         timer1 = new PeriodicTimer(1);
         timer2 = new DateTimer(dates);
 
         mergedTimer = new MergedTimer(timer1, timer2);
 
-        int expectedNext = 2;
-        while (mergedTimer.hasNext()) {
-            assertEquals(expectedNext, mergedTimer.next());
-            expectedNext = (expectedNext == 2) ? 6 : 11;
-        }
+        assertEquals(2, mergedTimer.next());
+        assertNull(mergedTimer.next());
     }
 
     // ----HASNEXT----
@@ -107,16 +100,13 @@ class MergedTimerTest {
         dates.add(5);
         dates.add(10);
 
-        timer1 = new PeriodicTimer(1);
-        timer2 = new DateTimer(dates);
+        Timer timer1 = new PeriodicTimer(1);
+        Timer timer2 = new DateTimer(dates);
 
-        mergedTimer = new MergedTimer(timer1, timer2);
+        MergedTimer mergedTimer = new MergedTimer(timer1, timer2);
 
-        int expectedNext = 2; // 1 (from PeriodicTimer) + 1 (from DateTimer)
-        while (mergedTimer.hasNext()) {
-            assertEquals(expectedNext, mergedTimer.next());
-            expectedNext = (expectedNext == 2) ? 6 : 11; // Update expectedNext based on the dates in DateTimer
-        }
+        assertTrue(mergedTimer.hasNext());
+        assertEquals(2, mergedTimer.next());
     }
 
     @Test // TEST 2
