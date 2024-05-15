@@ -57,6 +57,8 @@ class DiscreteActionDependentTest {
     @Test // TEST 3
     void testNextMethodLimit1() {
         actionDependent.depedentActions.clear();
+        actionDependent.depedentActions.add(new DiscreteAction("h", "modifyChar", dt2));
+        actionDependent.depedentActions.first().setLapsTime(10);
         DiscreteAction currentActionBefore = actionDependent.currentAction;
         actionDependent.nextMethod();
         assertEquals(currentActionBefore, actionDependent.currentAction);
@@ -71,6 +73,8 @@ class DiscreteActionDependentTest {
 
     @Test // TEST 1
     void testSpendTimePositive() {
+        actionDependent.depedentActions.add(new DiscreteAction("h", "modifyChar", dt2));
+        actionDependent.depedentActions.first().setLapsTime(10);
         actionDependent.addDependence(word, "modifyChar", dt2);
         int initialTime = actionDependent.depedentActions.first().getCurrentLapsTime();
 
@@ -83,6 +87,8 @@ class DiscreteActionDependentTest {
 
     @Test // TEST 2
     void testSpendTimeZero() {
+        actionDependent.depedentActions.add(new DiscreteAction("h", "modifyChar", dt2));
+        actionDependent.depedentActions.first().setLapsTime(10);
         actionDependent.addDependence(word, "modifyChar", dt2);
         int initialTime = actionDependent.depedentActions.first().getCurrentLapsTime();
 
