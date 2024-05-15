@@ -15,12 +15,13 @@ class DiscreteActionDependentTest {
     private final String word = "Bonjour";
     private final Vector vector1 = new Vector();
     private final Vector vector2 = new Vector();
+    private Timer dt1;
     private Timer dt2;
 
     @BeforeEach
     void setUp() {
         vector1.add(10);
-        Timer dt1 = new DateTimer(vector1);
+        dt1 = new DateTimer(vector1);
         dt2 = new DateTimer(vector2);
         vector2.add(20);
         this.actionDependent = new DiscreteActionDependent(word, "charCount", dt1);
