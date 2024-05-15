@@ -62,63 +62,32 @@ class RandomTimerTest {
     }
 
     @Test
-    void testDoubleRandomTimerWithPossibilistDistribution() throws Exception {
-        RandomTimer randomTimer = null;
-
-        randomTimer = new RandomTimer(RandomTimer.randomDistribution.POSIBILIST, 0.5);
-
-        //verify if new Exception("Bad Timer constructor for selected distribution") is thrown
-        fail("Bad Timer constructor for selected distribution");
-
-
+    void testDoubleRandomTimerWithPossibilistDistribution() {
+        assertThrows(Exception.class, () -> {
+            new RandomTimer(RandomTimer.randomDistribution.POSIBILIST, 0.5);
+        }, "Bad Timer constructor for selected distribution");
     }
 
 
     @Test
-    void testDoubleRandomTimerWithGaussianDistribution() throws Exception {
-        RandomTimer randomTimer = null;
-
-        randomTimer = new RandomTimer(RandomTimer.randomDistribution.GAUSSIAN, 0.5);
-
-        assertThrows(Exception.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                throw new Exception("Bad Timer constructor for selected distribution");
-            }
-        });
-
-
+    void testDoubleRandomTimerWithGaussianDistribution() {
+        assertThrows(Exception.class, () -> {
+            new RandomTimer(RandomTimer.randomDistribution.GAUSSIAN, 0.5);
+            }, "Bad Timer constructor for selected distribution");
     }
 
     @Test
-    void testIntRandomTimerWithExpDistribution() throws Exception {
-        RandomTimer randomTimer = null;
-
-        randomTimer = new RandomTimer(RandomTimer.randomDistribution.EXP, 0, 5);
-
-
-        assertThrows(Exception.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                throw new Exception("Bad Timer constructor for selected distribution");
-            }
-        });
-
+    void testIntRandomTimerWithExpDistribution() {
+        assertThrows(Exception.class, () -> {
+            new RandomTimer(RandomTimer.randomDistribution.EXP, 0.0, 5.0);
+        }, "Bad Timer constructor for selected distribution");
     }
 
     @Test
     void testIntRandomTimerWithPoissonDistribution() throws Exception {
-        RandomTimer randomTimer = null;
-
-        randomTimer = new RandomTimer(RandomTimer.randomDistribution.POISSON, 0, 5);
-
-        assertThrows(Exception.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                throw new Exception("Bad Timer constructor for selected distribution");
-            }
-        });
-
+        assertThrows(Exception.class, () -> {
+            new RandomTimer(RandomTimer.randomDistribution.POISSON, 0.0, 5.0);
+        }, "Bad Timer constructor for selected distribution");
     }
 
     @Test
@@ -128,7 +97,7 @@ class RandomTimerTest {
         randomTimer = new RandomTimer(RandomTimer.randomDistribution.GAUSSIAN, 0, 5);
 
         assertEquals("GAUSSIAN", randomTimer.getDistribution());
-        assertEquals("lolim: 0 hilim: 5", randomTimer.getDistributionParam());
+        assertEquals("lolim: 0.0 hilim: 5.0", randomTimer.getDistributionParam());
         assertEquals(2.5, randomTimer.getMean());
 //        assertEquals(randomTimer.lolim, 0);
 //        assertEquals(randomTimer.hilim, 5);
@@ -142,7 +111,7 @@ class RandomTimerTest {
         randomTimer = new RandomTimer(RandomTimer.randomDistribution.POSIBILIST, 0, 5);
 
         assertEquals("POSIBILIST", randomTimer.getDistribution());
-        assertEquals("lolim: 0 hilim: 5", randomTimer.getDistributionParam());
+        assertEquals("lolim: 0.0 hilim: 5.0", randomTimer.getDistributionParam());
         assertEquals(2.5, randomTimer.getMean());
 //        assertEquals(randomTimer.lolim, 0);
 //        assertEquals(randomTimer.hilim, 5);
@@ -186,14 +155,14 @@ class RandomTimerTest {
     @Test
     void testToStringWithPosibilistDistribution() {
 
-        assertEquals("POSIBILIST lolim:10 hilim:20", posibilistTimer.toString());
+        assertEquals("POSIBILIST LoLim:10.0 HiLim:20.0", posibilistTimer.toString());
 
     }
 
     @Test
     void testToStringWithGaussianDistribution() {
 
-        assertEquals("GAUSSIAN lolim:10 hilim:20", gaussianTimer.toString());
+        assertEquals("GAUSSIAN LoLim:10.0 HiLim:20.0", gaussianTimer.toString());
 
     }
 
