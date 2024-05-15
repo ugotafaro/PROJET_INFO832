@@ -67,6 +67,13 @@ public class DiscreteAction implements DiscreteActionInterface {
 	}
 	
 	// ATTRIBUTION
+	public void setLapsTime(Integer t){
+		this.lapsTime = t;
+	}
+
+	public Integer getLapsTime() {
+		return lapsTime;
+	}
 
 	public void spendTime(int t) {
 		Integer old = this.lapsTime;
