@@ -134,10 +134,6 @@ class RandomTimerTest {
     }
 
 
-
-
-
-
     @Test
     void testToStringWithExpDistribution() {
 
@@ -167,16 +163,11 @@ class RandomTimerTest {
     }
 
 
-
-
-
     @Test
     void hasNext() throws Exception {
 
         RandomTimer randomTimer = new RandomTimer(RandomTimer.randomDistribution.EXP, 0.5);
-
-
-        assertEquals(true, randomTimer.hasNext());
+        assertTrue(randomTimer.hasNext());
 
     }
 }
