@@ -1,14 +1,9 @@
 package action;
 
 import java.lang.reflect.Method;
-import java.util.TreeSet;
-import java.util.Vector;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import discreteBehaviorSimulator.LogFormatter;
 import timer.Timer;
 
 /**
@@ -89,7 +84,9 @@ public class DiscreteAction implements DiscreteActionInterface {
 		return object;
 	}
 
-
+	public void setLapsTime(Integer lapsTime) {
+		this.lapsTime = lapsTime;
+	}
 
 	// COMPARAISON
 	public int compareTo(DiscreteActionInterface c) {
