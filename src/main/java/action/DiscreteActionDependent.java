@@ -29,7 +29,7 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	 */
 	public DiscreteActionDependent(Object o, String baseMethodName, Timer timerBase){
 		this.baseAction = new DiscreteAction(o, baseMethodName, timerBase);
-		this.depedentActions = new TreeSet<DiscreteAction>();
+		this.depedentActions = new TreeSet<>();
 		this.it = this.depedentActions.iterator();
 		this.currentAction = this.baseAction;
 	}
