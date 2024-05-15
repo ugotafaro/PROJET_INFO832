@@ -16,8 +16,8 @@ class DiscreteActionTest {
     @Test // TEST 1 contructeur
     public void testConstructor() {
 
-        Object object = new Object();
-        String methodName = "exampleMethod";
+        Object object = "Hello";
+        String methodName = "toUpperCase";
         Timer timer = new Timer() {
             @Override
             public Integer next() {
@@ -33,18 +33,14 @@ class DiscreteActionTest {
 
 
         assertNotNull(discreteAction);
-
         assertEquals(object, discreteAction.getObject());
         assertEquals(methodName, discreteAction.getMethod().getName());
-
-
-
     }
 
     @Test // TEST 2.1 spendTime
     public void testSpendTime1() {
         // Créez un objet DiscreteAction avec une valeur de lapsTime égale à 4
-        DiscreteAction discreteAction = new DiscreteAction(new Object(), "exampleMethod", new Timer() {
+        DiscreteAction discreteAction = new DiscreteAction("Hello", "length", new Timer() {
             @Override
             public Integer next() {
                 return null;
@@ -120,14 +116,13 @@ class DiscreteActionTest {
                 return false;
             }
         });
-        discreteAction.setLapsTime(0);
+        discreteAction.setLapsTime(null);
         discreteAction.compareTo(discreteAction);
         assertEquals(1, discreteAction.compareTo(discreteAction));
-
     }
     @Test //test 3.2 compareTo
     void testcompareTo32(){
-        DiscreteAction discreteAction = new DiscreteAction(new Object(), "exampleMethod", new Timer() {
+        DiscreteAction discreteAction = new DiscreteAction("test", "length", new Timer() {
             @Override
             public Integer next() {
                 return null;
@@ -139,7 +134,7 @@ class DiscreteActionTest {
             }
         });
         discreteAction.setLapsTime(2);
-        DiscreteAction discreteAction2 = new DiscreteAction(new Object(), "exampleMethod", new Timer() {
+        DiscreteAction discreteAction2 = new DiscreteAction("test", "length", new Timer() {
             @Override
             public Integer next() {
                 return null;
@@ -150,7 +145,7 @@ class DiscreteActionTest {
                 return false;
             }
         });
-        discreteAction2.setLapsTime(0);
+        discreteAction2.setLapsTime(null);
         discreteAction.compareTo(discreteAction2);
         assertEquals(-1, discreteAction.compareTo(discreteAction2));
 
