@@ -37,15 +37,6 @@ pipeline {
             }
         }
 
-//
-//         stage('SonarCube') {
-//             steps {
-//                 script {
-//                     def maven = tool 'Maven'
-//                     sh "${maven}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sat_refactory -Dsonar.host.url=http://gpu-epu.univ-savoie.fr:9000 -Dsonar.login=sqa_ba53a54bf38616fec9572cda5cc21b1345ef6463"
-//                 }
-//             }
-//         }
         stage('SCM') {
             steps {
                 checkout scm

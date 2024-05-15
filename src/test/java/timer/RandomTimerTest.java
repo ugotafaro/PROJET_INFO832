@@ -2,6 +2,7 @@ package timer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,57 +62,32 @@ class RandomTimerTest {
     }
 
     @Test
-    void testDoubleRandomTimerWithPossibilistDistribution() throws Exception {
-        RandomTimer randomTimer = null;
-
-        randomTimer = new RandomTimer(RandomTimer.randomDistribution.POSIBILIST, 0.5);
-
-        //verify if new Exception("Bad Timer constructor for selected distribution") is thrown
+    void testDoubleRandomTimerWithPossibilistDistribution() {
         assertThrows(Exception.class, () -> {
-            // Code that should throw the exception
-            throw new Exception("Bad Timer constructor for selected distribution");
-        });
-
-
+            new RandomTimer(RandomTimer.randomDistribution.POSIBILIST, 0.5);
+        }, "Bad Timer constructor for selected distribution");
     }
 
 
     @Test
-    void testDoubleRandomTimerWithGaussianDistribution() throws Exception {
-        RandomTimer randomTimer = null;
-
-        randomTimer = new RandomTimer(RandomTimer.randomDistribution.GAUSSIAN, 0.5);
-
+    void testDoubleRandomTimerWithGaussianDistribution() {
         assertThrows(Exception.class, () -> {
-            throw new Exception("Bad Timer constructor for selected distribution");
-        });
-
-
+            new RandomTimer(RandomTimer.randomDistribution.GAUSSIAN, 0.5);
+            }, "Bad Timer constructor for selected distribution");
     }
 
     @Test
-    void testIntRandomTimerWithExpDistribution() throws Exception {
-        RandomTimer randomTimer = null;
-
-        randomTimer = new RandomTimer(RandomTimer.randomDistribution.EXP, 0, 5);
-
-
+    void testIntRandomTimerWithExpDistribution() {
         assertThrows(Exception.class, () -> {
-            throw new Exception("Bad Timer constructor for selected distribution");
-        });
-
+            new RandomTimer(RandomTimer.randomDistribution.EXP, 0.0, 5.0);
+        }, "Bad Timer constructor for selected distribution");
     }
 
     @Test
     void testIntRandomTimerWithPoissonDistribution() throws Exception {
-        RandomTimer randomTimer = null;
-
-        randomTimer = new RandomTimer(RandomTimer.randomDistribution.POISSON, 0, 5);
-
         assertThrows(Exception.class, () -> {
-            throw new Exception("Bad Timer constructor for selected distribution");
-        });
-
+            new RandomTimer(RandomTimer.randomDistribution.POISSON, 0.0, 5.0);
+        }, "Bad Timer constructor for selected distribution");
     }
 
     @Test
@@ -121,7 +97,7 @@ class RandomTimerTest {
         randomTimer = new RandomTimer(RandomTimer.randomDistribution.GAUSSIAN, 0, 5);
 
         assertEquals("GAUSSIAN", randomTimer.getDistribution());
-        assertEquals("lolim: 0 hilim: 5", randomTimer.getDistributionParam());
+        assertEquals("lolim: 0.0 hilim: 5.0", randomTimer.getDistributionParam());
         assertEquals(2.5, randomTimer.getMean());
 //        assertEquals(randomTimer.lolim, 0);
 //        assertEquals(randomTimer.hilim, 5);
@@ -135,7 +111,7 @@ class RandomTimerTest {
         randomTimer = new RandomTimer(RandomTimer.randomDistribution.POSIBILIST, 0, 5);
 
         assertEquals("POSIBILIST", randomTimer.getDistribution());
-        assertEquals("lolim: 0 hilim: 5", randomTimer.getDistributionParam());
+        assertEquals("lolim: 0.0 hilim: 5.0", randomTimer.getDistributionParam());
         assertEquals(2.5, randomTimer.getMean());
 //        assertEquals(randomTimer.lolim, 0);
 //        assertEquals(randomTimer.hilim, 5);
@@ -148,39 +124,15 @@ class RandomTimerTest {
 
         randomTimer = new RandomTimer(RandomTimer.randomDistribution.EXP, 0);
 
-        assertThrows(Exception.class, () -> {
-            throw new ArithmeticException("division by zero");
+        assertThrows(Exception.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                throw new ArithmeticException("division by zero");
+            }
         });
 
     }
 
-
-
-
-
-
-
-
-
-    @Test
-    void string2Distribution() {
-    }
-
-    @Test
-    void distribution2String() {
-    }
-
-    @Test
-    void getDistribution() {
-    }
-
-    @Test
-    void getDistributionParam() {
-    }
-
-    @Test
-    void getMean() {
-    }
 
     @Test
     void testToStringWithExpDistribution() {
@@ -199,28 +151,23 @@ class RandomTimerTest {
     @Test
     void testToStringWithPosibilistDistribution() {
 
-        assertEquals("POSIBILIST lolim:10 hilim:20", posibilistTimer.toString());
+        assertEquals("POSIBILIST LoLim:10.0 HiLim:20.0", posibilistTimer.toString());
 
     }
 
     @Test
     void testToStringWithGaussianDistribution() {
 
-        assertEquals("GAUSSIAN lolim:10 hilim:20", gaussianTimer.toString());
+        assertEquals("GAUSSIAN LoLim:10.0 HiLim:20.0", gaussianTimer.toString());
 
     }
-
-
-
 
 
     @Test
     void hasNext() throws Exception {
 
         RandomTimer randomTimer = new RandomTimer(RandomTimer.randomDistribution.EXP, 0.5);
-
-
-        assertEquals(true, randomTimer.hasNext());
+        assertTrue(randomTimer.hasNext());
 
     }
 }

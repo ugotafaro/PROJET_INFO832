@@ -98,41 +98,50 @@ public class DiscreteActionSimulator implements Runnable {
 	/**
 	 * @return laps time of the running action
 	 */
-	private int runAction(){
-		// Run the first action
+	private int runAction() {
 		int sleepTime = 0;
 
+		// Vérification que la liste d'actions n'est pas vide
+		if (!this.actionsList.isEmpty()) {
+			// Récupération de l'action en cours
+			DiscreteActionInterface currentAction = this.actionsList.get(0);
+			Object o = currentAction.getObject();
+			Method m = currentAction.getMethod();
+			sleepTime = currentAction.getCurrentLapsTime();
 
-		// TODO Manage parallel execution !  
-		DiscreteActionInterface currentAction = this.actionsList.get(0);
-		Object o = currentAction.getObject();
-		Method m = currentAction.getMethod();
-		sleepTime = currentAction.getCurrentLapsTime();
-		
-		try {
-			//Thread.sleep(sleepTime); // Real time can be very slow
-			Thread.yield();
-			//Thread.sleep(1000); // Wait message bus sends
-			if(this.globalTime!=null) {
-				this.globalTime.increase(sleepTime);
+			try {
+				// Exécution de l'action si la méthode n'est pas null
+				if (m != null) {
+					//Thread.sleep(sleepTime); // Real time can be very slow
+					Thread.yield();
+					//Thread.sleep(1000); // Wait message bus sends
+					if (this.globalTime != null) {
+						this.globalTime.increase(sleepTime);
+					}
+					m.invoke(o);
+					if (this.globalTime != null) {
+						// Logging de l'exécution de l'action
+						this.logger.log(Level.FINE, "[DAS] run action " + m.getName() + " on " + o.getClass().getName() + ":" + o.hashCode() + " at " + this.globalTime.getTime() + " after " + sleepTime + " time units\n");
+						System.out.println("[DAS] run action " + m.getName() + " on " + o.getClass().getName() + ":" + o.hashCode() + " at " + this.globalTime.getTime() + " after " + sleepTime + " time units\n");
+					} else {
+						this.logger.log(Level.FINE, "[DAS] run action " + m.getName() + " on " + o.getClass().getName() + ":" + o.hashCode() + " after " + sleepTime + " time units\n");
+						System.out.println("[DAS] run action " + m.getName() + " on " + o.getClass().getName() + ":" + o.hashCode() + " after " + sleepTime + " time units\n");
+					}
+				} else {
+					// Gestion du cas où la méthode est null
+					System.err.println("[DAS] run action: method is null");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			m.invoke(o);
-			if(this.globalTime!=null) {
-				this.logger.log(Level.FINE, "[DAS] run action " + m.getName() + " on " + o.getClass().getName() + ":" + o.hashCode() + " at " + this.globalTime.getTime() + " after " + sleepTime + " time units\n");
-				System.out.println("[DAS] run action " + m.getName() + " on " + o.getClass().getName() + ":" + o.hashCode() + " at " + this.globalTime.getTime() + " after " + sleepTime + " time units\n");
-			}else {
-				this.logger.log(Level.FINE, "[DAS] run action " + m.getName() + " on " + o.getClass().getName() + ":" + o.hashCode() + " after " + sleepTime + " time units\n");
-				System.out.println("[DAS] run action " + m.getName() + " on " + o.getClass().getName() + ":" + o.hashCode() + " after " + sleepTime + " time units\n");
-			
-			}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
+		} else {
+			// Gestion du cas où il n'y a pas d'action à exécuter
+			System.out.println("NOTHING TO DO\n");
+			this.stop();
 		}
 
 		return sleepTime;
 	}
-
 	private void updateTimes(int runningTimeOf1stCapsul){
 		
 		// update time laps off all actions
@@ -214,6 +223,9 @@ public class DiscreteActionSimulator implements Runnable {
 	}
 
 	public void start(){
+		if (actionsList.isEmpty()) {
+			throw new IllegalStateException("No action to run");
+		}
 		this.running = true;
 		this.t.start();
 	}
