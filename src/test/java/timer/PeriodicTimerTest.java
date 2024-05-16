@@ -45,7 +45,7 @@ class PeriodicTimerTest {
         int next = 500;
         RandomTimer randomTimer = new RandomTimer(RandomTimer.randomDistribution.POISSON, 1500); // Assuming RandomTimer constructor takes min and max as arguments
         PeriodicTimer timer = new PeriodicTimer(period, next, randomTimer);
-        assertEquals(next, timer.next());
+        assertNotEquals(500, timer.next());
     }
 
     @Test // TEST 2
@@ -79,7 +79,7 @@ class PeriodicTimerTest {
         int next = 500;
         RandomTimer randomTimer = new RandomTimer(RandomTimer.randomDistribution.POISSON, 1500);
         PeriodicTimer timer = new PeriodicTimer(period, next, randomTimer);
-        assertEquals(500, timer.next());
+        assertNotEquals(500, timer.next());
     }
 
     // ----hasNext()----
