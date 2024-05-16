@@ -38,12 +38,12 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	 * Adds a dependent action to the DiscreteActionDependent object.
 	 * This method creates a new DiscreteAction with the provided parameters and adds it to the set of dependent actions.
 	 *
-	 * @param o The object on which the dependent method will be invoked.
+	 * @param object The object on which the dependent method will be invoked.
 	 * @param depentMethodName The name of the dependent method to be invoked on the object 'o'.
 	 * @param timerDependence The Timer object associated with the dependent action. This is used to manage the timing of the dependent action.
 	 */
-	public void addDependence(Object o, String depentMethodName, Timer timerDependence) {
-		this.depedentActions.add(new DiscreteAction(o, depentMethodName, timerDependence));
+	public void addDependence(Object object, String depentMethodName, Timer timerDependence) {
+		this.depedentActions.add(new DiscreteAction(object, depentMethodName, timerDependence));
 	}
 	
 	/*private void dates2Timalapse(TreeSet<Integer> datesOn, TreeSet<Integer> datesOff, Vector<Integer> timeLapseOn, Vector<Integer> timeLapseOff) {
@@ -113,14 +113,14 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	 * If the current action is the last action in the dependent actions set, it resets the current action back to the base action and reinitializes the DiscreteActionDependent object.
 	 * If the current action is neither the base action nor the last action in the set, it simply moves the current action to the next action in the set.
 	 */
-	public void nextMethod(){
-		if (this.currentAction == this.baseAction){
+	public void nextMethod() {
+		if (this.currentAction == this.baseAction) {
 			this.it = this.depedentActions.iterator();
 			this.currentAction = this.it.next();
-		}else if(this.currentAction == this.depedentActions.last()){
+		} else if (this.currentAction == this.depedentActions.last()) {
 			this.currentAction = this.baseAction;
 			this.reInit();
-		}else {
+		} else {
 			this.currentAction = this.it.next();
 		}
 	}
