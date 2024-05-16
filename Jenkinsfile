@@ -11,6 +11,8 @@ pipeline {
                     def maven = tool 'Maven'
                     sh "${maven}/bin/mvn -B -DskipTests clean install"
                 }
+                junit '*/build/test-results/*.xml'
+                step( [ $class: 'JacocoPublisher' ] )
             }
         }
 
