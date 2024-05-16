@@ -65,8 +65,13 @@ public class DiscreteAction implements DiscreteActionInterface {
 		if(this.lapsTime != null) {
 			this.lapsTime -= timeSpent;
 		}
-		this.logger.log(Level.FINE, "[DA] operate spendTime on  " + this.getObject().getClass().getName() + ":" + this.getObject().hashCode() + ": old time " + old + " new time " + this.getCurrentLapsTime());
-	}
+		String logMessage = String.format("[DA] operate spendTime on  %s:%d: old time %d new time %d",
+				this.getObject().getClass().getName(),
+				this.getObject().hashCode(),
+				old,
+				this.getCurrentLapsTime());
+
+		this.logger.log(Level.FINE, logMessage);	}
 
 	/**
 	 * Compares this discrete action to another discrete action.

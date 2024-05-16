@@ -24,22 +24,16 @@ public class DiscreteActionOnOffDependent implements DiscreteActionInterface {
 	 * Construct an On Off dependence, first action (method) called is On, then method nextMethod() is called to select the next action.
 	 * The default behavior of nextMethod() is to switch between On and Off actions.  It can be change by overloading. 
 	 * 
-	 * @param o
+	 * @param object
 	 * @param on
 	 * @param timerOn
 	 * @param off
 	 * @param timerOff
 	 */
-	/*public DiscreteActionOnOffDependent(Wo o, Method on, Timer timerOn, Method off, Timer timerOff){
-		this.onAction = new DiscreteAction(o, on, timerOn);
-		this.offAction = new DiscreteAction(o, off, timerOff);
-		
-		this.currentAction = this.onAction;
-	}*/
 	
-	public DiscreteActionOnOffDependent(Object o, String on, Timer timerOn, String off, Timer timerOff){
-		this.onAction = new DiscreteAction(o, on, timerOn);
-		this.offAction = new DiscreteAction(o, off, timerOff);
+	public DiscreteActionOnOffDependent(Object object, String on, Timer timerOn, String off, Timer timerOff){
+		this.onAction = new DiscreteAction(object, on, timerOn);
+		this.offAction = new DiscreteAction(object, off, timerOff);
 		
 		this.currentAction = this.offAction;
 		this.currentLapsTime = 0;
@@ -77,14 +71,10 @@ public class DiscreteActionOnOffDependent implements DiscreteActionInterface {
 		
 	}
 	
-	public DiscreteActionOnOffDependent(Object o, String on, TreeSet<Integer> datesOn, String off, TreeSet<Integer> datesOff){
-		/*Vector<Integer> timeLapseOn = new Vector<Integer>();
-		Vector<Integer> timeLapseOff = new Vector<Integer>();
-		
-		dates2Timalapse((TreeSet<Integer>)datesOn.clone(), (TreeSet<Integer>)datesOff.clone(), timeLapseOn, timeLapseOff);
-		*/
-		this.onAction = new DiscreteAction(o, on, new DateTimer(datesOn));
-		this.offAction = new DiscreteAction(o, off, new DateTimer(datesOff));
+	public DiscreteActionOnOffDependent(Object object, String on, TreeSet<Integer> datesOn, String off, TreeSet<Integer> datesOff){
+
+		this.onAction = new DiscreteAction(object, on, new DateTimer(datesOn));
+		this.offAction = new DiscreteAction(object, off, new DateTimer(datesOff));
 		
 		
 		

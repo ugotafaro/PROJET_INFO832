@@ -23,12 +23,12 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	 * Constructs a DiscreteActionDependent object. This object represents a series of dependent actions.
 	 * The first action (method) called is the baseMethodName, then the method nextMethod() is called to select the next action.
 	 *
-	 * @param o The object on which the base method will be invoked.
+	 * @param object The object on which the base method will be invoked.
 	 * @param baseMethodName The name of the base method to be invoked on the object 'o'.
 	 * @param timerBase The Timer object associated with the base action. This is used to manage the timing of the base action.
 	 */
-	public DiscreteActionDependent(Object o, String baseMethodName, Timer timerBase){
-		this.baseAction = new DiscreteAction(o, baseMethodName, timerBase);
+	public DiscreteActionDependent(Object object, String baseMethodName, Timer timerBase){
+		this.baseAction = new DiscreteAction(object, baseMethodName, timerBase);
 		this.depedentActions = new TreeSet<>();
 		this.it = this.depedentActions.iterator();
 		this.currentAction = this.baseAction;
@@ -45,55 +45,7 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	public void addDependence(Object object, String depentMethodName, Timer timerDependence) {
 		this.depedentActions.add(new DiscreteAction(object, depentMethodName, timerDependence));
 	}
-	
-	/*private void dates2Timalapse(TreeSet<Integer> datesOn, TreeSet<Integer> datesOff, Vector<Integer> timeLapseOn, Vector<Integer> timeLapseOff) {
-		Vector<Integer> currentTimeLapse;
-		TreeSet<Integer> currentDates;
-		Integer date=0;
-		if(datesOn.first()<datesOff.first()) {
-			currentTimeLapse = timeLapseOn;
-			currentDates = datesOn;
-		}else {
-			currentTimeLapse = timeLapseOff;	
-			currentDates = datesOff;		
-		}
-		Integer nextDate;
-		
-		while(datesOn.size()>0 || datesOff.size()>0) {
-			nextDate = currentDates.first();
-		
-			currentTimeLapse.add(nextDate - date);
-			currentDates.remove(nextDate);
-		
-			date = nextDate;
-			
-			if(currentDates == datesOn) {
-				currentDates = datesOff;
-				currentTimeLapse = timeLapseOff;
-			}else {
-				currentDates = datesOn;
-				currentTimeLapse = timeLapseOn;			
-			}
-		}
-		
-	}
-	@SuppressWarnings("unchecked")
-	public DiscreteActionDependent(Wo o, String on, TreeSet<Integer> datesOn, String off, TreeSet<Integer> datesOff){
-		Vector<Integer> timeLapseOn = new Vector<Integer>();
-		Vector<Integer> timeLapseOff = new Vector<Integer>();
-		
-		dates2Timalapse((TreeSet<Integer>)datesOn.clone(), (TreeSet<Integer>)datesOff.clone(), timeLapseOn, timeLapseOff);
-		
-		this.baseAction = new DiscreteAction(o, on, timeLapseOn);
-		this.offAction = new DiscreteAction(o, off, timeLapseOff);
-		
-		if(datesOn.first() < datesOff.first()){
-			this.currentAction = this.baseAction;
-		}else{
-			this.currentAction = this.offAction;
-		}
-	}
-*/
+
 	/**
 	 * Reinitializes the DiscreteActionDependent object.
 	 * This method iterates over all dependent actions and updates their time lapses.
@@ -140,7 +92,7 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 
 	public void updateTimeLaps() {
 		// time laps is updated at the re-initialization
-		//this.currentAction.updateTimeLaps();	
+		// this.currentAction.updateTimeLaps();
 		this.nextMethod();	
 	}
 
