@@ -11,7 +11,6 @@ pipeline {
                     def maven = tool 'Maven'
                     sh "${maven}/bin/mvn -B -DskipTests clean install"
                 }
-                step( [ $class: 'JacocoPublisher' ] )
             }
         }
 
