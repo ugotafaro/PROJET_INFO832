@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import timer.DateTimer;
 import timer.Timer;
 
+import java.lang.reflect.Method;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DiscreteActionDependentTest {
 
     private DiscreteActionDependent actionDependent;
+    private String method = "toUpperCase";
     private final String word = "Bonjour";
     private final Vector vector1 = new Vector();
     private final Vector vector2 = new Vector();
@@ -24,7 +26,7 @@ class DiscreteActionDependentTest {
         dt1 = new DateTimer(vector1);
         dt2 = new DateTimer(vector2);
         vector2.add(20);
-        this.actionDependent = new DiscreteActionDependent(word, "charCount", dt1);
+        this.actionDependent = new DiscreteActionDependent(word, method, dt1);
     }
 
     @Test // TEST 1
@@ -39,16 +41,20 @@ class DiscreteActionDependentTest {
 
     @Test // TEST 1
     void addDependence() {
-        actionDependent.addDependence(word, "modifyChar", dt2);
-        assertEquals(actionDependent.depedentActions.last(), new DiscreteAction(word, "modifyChar", dt2));
+        actionDependent.addDependence(word, method, dt2);
+        assertEquals(actionDependent.depedentActions.last(), new DiscreteAction(word, method, dt2));
         assertEquals(1, actionDependent.depedentActions.size());
     }
 
     @Test // TEST 1 & 2
     void testNextMethodAffirmation() {
-        actionDependent.addDependence(word, "modifyChar", dt2);
+
+        actionDependent.addDependence(word, method, dt2);
         actionDependent.nextMethod();
-        assertEquals(new DiscreteAction(word, "modifyChar", dt2), actionDependent.currentAction);
+        DiscreteAction ds = new DiscreteAction(word, method, dt2);
+        System.out.println(ds);
+        System.out.println(actionDependent.currentAction);
+        assertEquals(ds, actionDependent.currentAction);
 
         actionDependent.nextMethod();
         assertEquals(actionDependent.baseAction, actionDependent.currentAction);
@@ -57,8 +63,8 @@ class DiscreteActionDependentTest {
     @Test // TEST 3
     void testNextMethodLimit1() {
         actionDependent.depedentActions.clear();
-        actionDependent.depedentActions.add(new DiscreteAction("h", "modifyChar", dt2));
-        actionDependent.depedentActions.first().setLapsTime(10);
+        actionDependent.depedentActions.add(new DiscreteAction("h", method, dt2));
+//        actionDependent.depedentActions.first().setLapsTime(10);
         DiscreteAction currentActionBefore = actionDependent.currentAction;
         actionDependent.nextMethod();
         assertEquals(currentActionBefore, actionDependent.currentAction);
@@ -73,9 +79,9 @@ class DiscreteActionDependentTest {
 
     @Test // TEST 1
     void testSpendTimePositive() {
-        actionDependent.depedentActions.add(new DiscreteAction("h", "modifyChar", dt2));
+        actionDependent.depedentActions.add(new DiscreteAction("h", method, dt2));
         actionDependent.depedentActions.first().setLapsTime(10);
-        actionDependent.addDependence(word, "modifyChar", dt2);
+        actionDependent.addDependence(word, method, dt2);
         int initialTime = actionDependent.depedentActions.first().getCurrentLapsTime();
 
         actionDependent.spendTime(5);
@@ -87,9 +93,9 @@ class DiscreteActionDependentTest {
 
     @Test // TEST 2
     void testSpendTimeZero() {
-        actionDependent.depedentActions.add(new DiscreteAction("h", "modifyChar", dt2));
+        actionDependent.depedentActions.add(new DiscreteAction("h", method, dt2));
         actionDependent.depedentActions.first().setLapsTime(10);
-        actionDependent.addDependence(word, "modifyChar", dt2);
+        actionDependent.addDependence(word, method, dt2);
         int initialTime = actionDependent.depedentActions.first().getCurrentLapsTime();
 
         actionDependent.spendTime(0);
@@ -100,14 +106,14 @@ class DiscreteActionDependentTest {
 
     @Test // TEST 1
     void testHasNextBaseActionHasNext() {
-        actionDependent.addDependence(word, "modifyChar", dt2);
+        actionDependent.addDependence(word, method, dt2);
         boolean result = actionDependent.hasNext();
         assertTrue(result);
     }
 
     @Test // TEST 2
     void testHasNextBaseActionHasNoNextButNotEmpty() {
-        actionDependent.addDependence(word, "modifyChar", dt2);
+        actionDependent.addDependence(word, method, dt2);
         actionDependent.nextMethod();
         boolean result = actionDependent.hasNext();
         assertTrue(result);
@@ -122,7 +128,7 @@ class DiscreteActionDependentTest {
     @Test // TEST 4
     void testHasNextWithLargeDependentActions() {
         for (int i = 0; i < 10000; i++) {
-            actionDependent.addDependence(word, "modifyChar", dt2);
+            actionDependent.addDependence(word, method, dt2);
         }
         boolean result = actionDependent.hasNext();
         assertTrue(result);
