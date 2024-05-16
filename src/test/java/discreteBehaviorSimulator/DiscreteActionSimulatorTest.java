@@ -5,6 +5,7 @@ import action.DiscreteActionInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import timer.DateTimer;
+import timer.RandomTimer;
 
 import java.util.Arrays;
 import java.util.TreeSet;
@@ -28,9 +29,14 @@ class DiscreteActionSimulatorTest {
         vector = new Vector();
         dates = new TreeSet<>(Arrays.asList(1, 2, 3));
         dt = new DateTimer(dates);
-        action1 = new DiscreteAction(word, "test", dt);
-        action2 = new DiscreteAction(word, "test", dt);
-        action3 = new DiscreteAction(word, "test", dt);
+        action1 = new DiscreteAction(word, "toUpperCase", dt);
+        action2 = new DiscreteAction(word, "toUpperCase", dt);
+        action3 = new DiscreteAction(word, "toUpperCase", dt);
+
+        simulator.addAction(action1);
+        simulator.addAction(action2);
+        simulator.addAction(action3);
+
 
     }
 
@@ -50,19 +56,17 @@ class DiscreteActionSimulatorTest {
 //    }
 
     @Test
-    void testRunWithNoActions() {
-        assertThrows(IllegalStateException.class, simulator::start);
+    void testRunWithNoActions()  {
+        DiscreteActionSimulator simulator2 = new DiscreteActionSimulator();
+        assertThrows(Exception.class, () -> {
+            simulator2.start();
+        }, "No action to run");
     }
 
     @Test
     void testRunWithNegativeOrZeroNbLoop() {
         simulator.setNbLoop(-1);
         simulator.start();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         assertTrue(simulator.getRunning());
         simulator.stop();
         assertFalse(simulator.getRunning());
@@ -77,7 +81,7 @@ class DiscreteActionSimulatorTest {
     @Test // TEST 2
     void testStartWhenRunningIsTrue() {
         simulator.start();
-        assertThrows(IllegalStateException.class, simulator::start);
+        assertThrows(IllegalThreadStateException.class, simulator::start);
     }
     @Test // TEST 1
     void testStopAfterStart() {

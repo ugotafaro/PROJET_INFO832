@@ -62,6 +62,13 @@ public class DiscreteAction implements DiscreteActionInterface {
 	}
 	
 	// ATTRIBUTION
+	public void setLapsTime(Integer t){
+		this.lapsTime = t;
+	}
+
+	public Integer getLapsTime() {
+		return lapsTime;
+	}
 
 	public void spendTime(int t) {
 		Integer old = this.lapsTime;
@@ -89,6 +96,14 @@ public class DiscreteAction implements DiscreteActionInterface {
 	}
 
 	// COMPARAISON
+	/**
+	 * Compare cette action discrète à une autre action discrète.
+	 *
+	 * @param c L'action discrète à comparer avec cette action discrète.
+	 * @return Un entier négatif si le temps d'attente de cette action discrète est inférieur à celui de l'action discrète passée en paramètre,
+	 * un entier positif si le temps d'attente de cette action discrète est supérieur à celui de l'action discrète passée en paramètre,
+	 * et zéro si les deux temps d'attente sont égaux.
+	 */
 	public int compareTo(DiscreteActionInterface c) {
 		if (this.lapsTime == null) { // no lapstime is equivalent to infinity 
 			return 1;

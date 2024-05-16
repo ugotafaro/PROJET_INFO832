@@ -1,6 +1,7 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
+src/main/javadoc/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
@@ -8,13 +9,15 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
-/.idea/sonarlint/
-/.idea/copilot/
+.idea/sonarlint
+.idea/copilot
 *.iws
 *.iml
 *.ipr
 .idea/workspace.xml
+.idea/tasks.xml
 .idea/misc.xml
+.idea
 
 ### Eclipse ###
 .apt_generated
@@ -40,3 +43,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+*.pb

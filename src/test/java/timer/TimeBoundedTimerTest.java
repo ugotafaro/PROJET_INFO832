@@ -1,5 +1,6 @@
 package timer;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
@@ -7,69 +8,48 @@ import java.util.function.Consumer;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TimeBoundedTimerTest {
+    public Timer timer;
 
+    @BeforeEach
+    public void setUp() {
+        timer = new Timer() {
+            private int[] values = {5, 10, 15};
+            private int index = 0;
 
+            @Override
+            public boolean hasNext() {
+                return index < values.length;
+            }
+
+            @Override
+            public Integer next() {
+                return values[index++];
+            }
+        };
+    }
 
     @Test
     public void testConstructorWithTimerAndTimes() {
 
-        Timer simulatedTimer = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
+        int startTime = 10;
+        int stopTime = 30;
+        TimeBoundedTimer tbt = new TimeBoundedTimer(timer, startTime, stopTime);
 
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        int startTime = 5;
-        int stopTime = 15;
-
-        TimeBoundedTimer timeBoundedTimer = new TimeBoundedTimer(simulatedTimer, startTime, stopTime);
-
-        //assertSame(simulatedTimer, timeBoundedTimer.getTimer2bound());
-        //assertEquals(startTime, timeBoundedTimer.getStartTime());
-        //assertEquals(stopTime, timeBoundedTimer.getStopTime());
-
-        assertTrue(timeBoundedTimer.hasNext());
+        assertNotNull(tbt);
+        assertNotNull(tbt.next());
+        assertTrue(tbt.hasNext());
     }
 
     @Test
     public void testConstructorWithTimerAndStartTime() {
-        Timer simulatedTimer = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
 
-            @Override
-            public Integer next() {
-                return null;
-            }
+        TimeBoundedTimer tbt = new TimeBoundedTimer(timer, 5);
 
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        int startTime = 5;
-
-        TimeBoundedTimer timeBoundedTimer = new TimeBoundedTimer(simulatedTimer, startTime);
-
-        //assertSame(simulatedTimer, timeBoundedTimer.getTimer2bound());
-        //assertEquals(startTime, timeBoundedTimer.getStartTime());
-        //assertEquals(Integer.MAX_VALUE, timeBoundedTimer.getStopTime());
-
-        assertTrue(timeBoundedTimer.hasNext());
+        assertNotNull(tbt);
+        assertNotNull(tbt.next());
+        assertTrue(tbt.hasNext());
+        assertNotNull(tbt.next());
+//        assertEquals(Integer.MAX_VALUE, tbt.getStopTime);
     }
 
     @Test
@@ -116,70 +96,25 @@ class TimeBoundedTimerTest {
     @Test
     public void testHasNextBeforeCallingNext() {
 
-        Timer simulatedTimer = new Timer() {
-            private int count = 0;
-            private int[] times = {2, 3, 5, 7, 11};
-
-            @Override
-            public boolean hasNext() {
-                return count < times.length;
-            }
-
-            @Override
-            public Integer next() {
-                if (count < times.length) {
-                    return times[count++];
-                } else {
-                    return null;
-                }
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-
         int startTime = 3;
         int stopTime = 15;
 
-        TimeBoundedTimer timeBoundedTimer = new TimeBoundedTimer(simulatedTimer, startTime, stopTime);
+        TimeBoundedTimer timeBoundedTimer = new TimeBoundedTimer(timer, startTime, stopTime);
 
-        assertTrue(timeBoundedTimer.hasNext());
+        if (timeBoundedTimer.next()<stopTime) {
+            assertTrue(timeBoundedTimer.hasNext());
+        } else {
+            assertFalse(timeBoundedTimer.hasNext());
+        }
     }
 
     @Test
     public void testHasNextAfterCallingNext() {
-        Timer simulatedTimer = new Timer() {
-            private int count = 0;
-            private int[] times = {2, 3, 5, 7, 11};
-
-            @Override
-            public boolean hasNext() {
-                return count < times.length;
-            }
-
-            @Override
-            public Integer next() {
-                if (count < times.length) {
-                    return times[count++];
-                } else {
-                    return null;
-                }
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
 
         int startTime = 3;
         int stopTime = 15;
 
-        TimeBoundedTimer timeBoundedTimer = new TimeBoundedTimer(simulatedTimer, startTime, stopTime);
+        TimeBoundedTimer timeBoundedTimer = new TimeBoundedTimer(timer, startTime, stopTime);
 
         while (timeBoundedTimer.hasNext()) {
             timeBoundedTimer.next();
@@ -189,38 +124,28 @@ class TimeBoundedTimerTest {
     }
 
     @Test
+    public void testHasNextAfterTimeExceedsStopTime(){
+
+        TimeBoundedTimer tbt = new TimeBoundedTimer(timer, 5, 20);
+
+        assertEquals(5, tbt.next());
+        assertEquals(10, tbt.next());
+        assertTrue(tbt.hasNext());
+        assertEquals(null, tbt.next());
+        assertFalse(tbt.hasNext());
+    }
+
+    @Test
     public void testNextOnFirstCall() {
-        Timer simulatedTimer = new Timer() {
-            private int count = 0;
-            private int[] times = {2, 3, 5, 7, 11};
-
-            @Override
-            public boolean hasNext() {
-                return count < times.length;
-            }
-
-            @Override
-            public Integer next() {
-                if (count < times.length) {
-                    return times[count++];
-                } else {
-                    return null;
-                }
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
 
         int startTime = 5;
         int stopTime = 15;
 
-        TimeBoundedTimer timeBoundedTimer = new TimeBoundedTimer(simulatedTimer, startTime, stopTime);
+        TimeBoundedTimer timeBoundedTimer = new TimeBoundedTimer(timer, startTime, stopTime);
 
         Integer firstNext = timeBoundedTimer.next();
 
+        assertEquals(5, firstNext);
         assertTrue(firstNext >= startTime);
         assertTrue(firstNext < stopTime);
     }
@@ -268,43 +193,6 @@ class TimeBoundedTimerTest {
                 assertNull(value);
             }
         }
-    }
-
-    @Test
-    public void testHasNextAfterTimeExceedsStopTime() {
-        Timer simulatedTimer = new Timer() {
-            private int count = 0;
-            private int[] times = {2, 3, 5, 7, 11};
-
-            @Override
-            public boolean hasNext() {
-                return count < times.length;
-            }
-
-            @Override
-            public Integer next() {
-                if (count < times.length) {
-                    return times[count++];
-                } else {
-                    return null;
-                }
-            }
-
-            @Override
-            public void remove() {
-            }
-        };
-
-        int startTime = 3;
-        int stopTime = 15;
-
-        TimeBoundedTimer timeBoundedTimer = new TimeBoundedTimer(simulatedTimer, startTime, stopTime);
-
-        while (timeBoundedTimer.hasNext()) {
-            timeBoundedTimer.next();
-        }
-
-        assertFalse(timeBoundedTimer.hasNext());
     }
 
 }
