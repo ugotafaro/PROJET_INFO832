@@ -147,11 +147,16 @@ public class DiscreteAction implements DiscreteActionInterface {
 	}
 
 	public String toString(){
-		return String.format("Object : %s\n Method : %s\n Stat. : %s\n delay: %s",
+		return String.format("Object : %s %n Method : %s %n Stat. : %s %n delay: %s",
 				this.object.getClass().getName(),
 				this.method.getName(),
 				this.timer,
 				this.lapsTime);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(object, method, timer);
 	}
 
 	@Override
