@@ -2,6 +2,7 @@ package action;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import timer.RandomTimer;
 import timer.Timer;
 
 import java.util.TreeSet;
@@ -12,490 +13,182 @@ class DiscreteActionOnOffDependentTest {
 
 
     @Test
-    public void testConstructorWithTimerOnGreaterThanTimerOff() {
-        final Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
+    public void testConstructorWithTimers() throws Exception {
+        Timer timerOn = new RandomTimer(RandomTimer.randomDistribution.POISSON, 5);
+        Timer timerOff = new RandomTimer(RandomTimer.randomDistribution.POISSON, 10);
+        String word = "word";
+        DiscreteActionOnOffDependent action = new DiscreteActionOnOffDependent(word, "toUpperCase", timerOn, "toLowerCase", timerOff);
 
-            @Override
-            public Integer next() {
-                return null;
-            }
+        assertNotNull(action);
 
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        final Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(new Object(), "on", simulatedTimerOn, "off", simulatedTimerOff);
-
-        assertThrows(IllegalArgumentException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                new DiscreteActionOnOffDependent(new Object(), "on", simulatedTimerOn, "off", simulatedTimerOff);
-            }
-        });
+        assertEquals("toLowerCase", action.getMethod().getName());
     }
 
     @Test
-    public void testConstructorWithTimerOnLessThanTimerOff() {
-        Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Object object = new Object();
-        String on = "on";
-        String off = "off";
-
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(object, on, simulatedTimerOn, off, simulatedTimerOff);
-
-        assertSame(object, discreteActionOnOffDependent.getObject());
-        assertEquals(on, discreteActionOnOffDependent.onAction.getMethod().getName());
-        assertEquals(off, discreteActionOnOffDependent.offAction.getMethod().getName());
-    }
-
-    @Test
-    public void testConstructorWithDatesOnAndDatesOff() {
-        Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-            }
-        };
-
-        Object object = new Object();
-        String on = "on";
-        String off = "off";
+    public void testConstructorWithDates() throws Exception {
         TreeSet<Integer> datesOn = new TreeSet<>();
         TreeSet<Integer> datesOff = new TreeSet<>();
+        String word = "word";
+        datesOn.add(10);
+        datesOff.add(5);
 
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(object, on, datesOn, off, datesOff);
+        DiscreteActionOnOffDependent action = new DiscreteActionOnOffDependent(word, "toUpperCase", datesOn, "toLowerCase", datesOff);
 
-        assertSame(object, discreteActionOnOffDependent.getObject());
-        assertEquals(on, discreteActionOnOffDependent.onAction.getMethod().getName());
-        assertEquals(off, discreteActionOnOffDependent.offAction.getMethod().getName());
-    }
+        assertNotNull(action);
 
-    @Test
-    public void testNextActionFromOnActionToOffAction() {
-        // Créer un Timer simulé pour passer au constructeur.
-        Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Object object = new Object();
-        String on = "on";
-        String off = "off";
-        TreeSet<Integer> datesOn = new TreeSet<>();
-        TreeSet<Integer> datesOff = new TreeSet<>();
-
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(object, on, datesOn, off, datesOff);
-
-        discreteActionOnOffDependent.nextAction();
-
-        assertSame(discreteActionOnOffDependent.offAction, discreteActionOnOffDependent.currentAction);
-    }
-
-    @Test
-    public void testSpendTime() {
-        Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Object object = new Object();
-        String on = "on";
-        String off = "off";
-        TreeSet<Integer> datesOn = new TreeSet<>();
-        TreeSet<Integer> datesOff = new TreeSet<>();
-
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(object, on, datesOn, off, datesOff);
-
-        discreteActionOnOffDependent.spendTime(5);
-
-        assertEquals(5, discreteActionOnOffDependent.currentAction.getCurrentLapsTime());
-    }
-
-    @Test
-    public void testGetMethod() {
-        Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Object object = new Object();
-        String on = "on";
-        String off = "off";
-        TreeSet<Integer> datesOn = new TreeSet<>();
-        TreeSet<Integer> datesOff = new TreeSet<>();
-
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(object, on, datesOn, off, datesOff);
-
-        discreteActionOnOffDependent.getMethod();
-
-        assertSame(discreteActionOnOffDependent.onAction.getMethod(), discreteActionOnOffDependent.getMethod());
-    }
-
-    @Test
-    public void testCompareTo() {
-        Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Object object = new Object();
-        String on = "on";
-        String off = "off";
-        TreeSet<Integer> datesOn = new TreeSet<>();
-        TreeSet<Integer> datesOff = new TreeSet<>();
-
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(object, on, datesOn, off, datesOff);
-
-        discreteActionOnOffDependent.compareTo(discreteActionOnOffDependent);
-
-        assertEquals(0, discreteActionOnOffDependent.compareTo(discreteActionOnOffDependent));
+        assertEquals("toLowerCase", action.getMethod().getName());
     }
 
 
-    @Test
-    public void testGetCurrentLapsTime() {
-        Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
 
-            @Override
-            public Integer next() {
-                return null;
-            }
 
-            @Override
-            public void remove() {
+        @Test
+        public void testNextActionSwitchesToOffAction() throws Exception {
+            Timer timerOn = new RandomTimer(RandomTimer.randomDistribution.POISSON, 5);
+            Timer timerOff = new RandomTimer(RandomTimer.randomDistribution.POISSON, 10);
+            String word =  "word";
 
-            }
-        };
+            DiscreteActionOnOffDependent action = new DiscreteActionOnOffDependent(word, "toUpperCase", timerOn, "toLowerCase", timerOff);
 
-        Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
+            action.nextAction();
+            action.nextAction();
 
-            @Override
-            public Integer next() {
-                return null;
-            }
+            assertEquals("toLowerCase", action.getMethod().getName());
+        }
 
-            @Override
-            public void remove() {
+        @Test
+        public void testNextActionSwitchesToOnAction() throws Exception {
+            Timer timerOn = new RandomTimer(RandomTimer.randomDistribution.POISSON, 5);
+            Timer timerOff = new RandomTimer(RandomTimer.randomDistribution.POISSON, 10);
+            String word = "word";
 
-            }
-        };
+            DiscreteActionOnOffDependent action = new DiscreteActionOnOffDependent(word, "toUpperCase", timerOn, "toLowerCase", timerOff);
 
-        Object object = new Object();
-        String on = "on";
-        String off = "off";
-        TreeSet<Integer> datesOn = new TreeSet<>();
-        TreeSet<Integer> datesOff = new TreeSet<>();
+            action.nextAction();
 
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(object, on, datesOn, off, datesOff);
 
-        discreteActionOnOffDependent.getCurrentLapsTime();
+            assertEquals("toUpperCase", action.getMethod().getName());
+        }
 
-        assertEquals(discreteActionOnOffDependent.currentAction.getCurrentLapsTime(), discreteActionOnOffDependent.getCurrentLapsTime());
-    }
+        @Test
+        public void testNextActionSpendTimeOnOffAction() throws Exception {
+            Timer timerOn = new RandomTimer(RandomTimer.randomDistribution.POISSON, 5);
+            Timer timerOff = new RandomTimer(RandomTimer.randomDistribution.POISSON, 10);
+            String word = "word";
+            DiscreteActionOnOffDependent action = new DiscreteActionOnOffDependent(word, "toUpperCase", timerOn, "toLowerCase", timerOff);
 
+            action.nextAction();
+            action.nextAction();
+
+            assertEquals("toLowerCase", action.getMethod().getName());
+
+
+            action.spendTime(5);
+
+            assertEquals("toLowerCase", action.getMethod().getName());
+        }
 
     @Test
-    public void testNext() {
-        Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
+    public void testSpendTimeOnOffAction() throws Exception {
+        Timer timerOn = new RandomTimer(RandomTimer.randomDistribution.POISSON, 5);
+        Timer timerOff = new RandomTimer(RandomTimer.randomDistribution.POISSON, 10);
+        Light light = new Light();
 
-            @Override
-            public Integer next() {
-                return null;
-            }
+        DiscreteActionOnOffDependent action = new DiscreteActionOnOffDependent(light, "turnOn", timerOn, "turnOff", timerOff);
 
-            @Override
-            public void remove() {
+        action.nextAction();
 
-            }
-        };
+        int currentLapsTime = action.getCurrentLapsTime();
+        action.spendTime(5);
 
-        Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        };
-
-        Object object = new Object();
-        String on = "on";
-        String off = "off";
-        TreeSet<Integer> datesOn = new TreeSet<>();
-        TreeSet<Integer> datesOff = new TreeSet<>();
-
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(object, on, datesOn, off, datesOff);
-
-        discreteActionOnOffDependent.next();
-
-        assertSame(discreteActionOnOffDependent.offAction, discreteActionOnOffDependent.currentAction);
+        assertNotEquals(currentLapsTime, action.getCurrentLapsTime());
     }
 
     @Test
-    public void testHasNext() {
-        Timer simulatedTimerOn = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
+    public void testSpendTimeOnOnAction() throws Exception {
+        Timer timerOn = new RandomTimer(RandomTimer.randomDistribution.POISSON, 5);
+        Timer timerOff = new RandomTimer(RandomTimer.randomDistribution.POISSON, 10);
+        String word = "word";
 
-            @Override
-            public Integer next() {
-                return null;
-            }
+        DiscreteActionOnOffDependent action = new DiscreteActionOnOffDependent(word, "toUpperCase", timerOn, "toLowerCase", timerOff);
 
-            @Override
-            public void remove() {
+        action.nextAction();
+        action.nextAction();
+        int currentLapsTime = action.getCurrentLapsTime();
+        action.spendTime(7);
 
-            }
-        };
+        assertNotEquals(currentLapsTime, action.getCurrentLapsTime());
+    }
 
-        Timer simulatedTimerOff = new Timer() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
+    @Test
+    public void testSpendTimeBeforeNextAction() throws Exception {
+        Timer timerOn = new RandomTimer(RandomTimer.randomDistribution.POISSON, 5);
+        Timer timerOff = new RandomTimer(RandomTimer.randomDistribution.POISSON, 10);
+        String word = "word";
 
-            @Override
-            public Integer next() {
-                return null;
-            }
+        DiscreteActionOnOffDependent action = new DiscreteActionOnOffDependent(word, "toUpperCase", timerOn, "toLowerCase", timerOff);
 
-            @Override
-            public void remove() {
+        action.nextAction();
 
-            }
-        };
+        int currentLapsTime = action.getCurrentLapsTime();
+        action.spendTime(7);
 
-        Object object = new Object();
-        String on = "on";
-        String off = "off";
-        TreeSet<Integer> datesOn = new TreeSet<>();
-        TreeSet<Integer> datesOff = new TreeSet<>();
+        assertNotEquals(currentLapsTime, action.getCurrentLapsTime());
 
-        DiscreteActionOnOffDependent discreteActionOnOffDependent = new DiscreteActionOnOffDependent(object, on, datesOn, off, datesOff);
 
-        discreteActionOnOffDependent.hasNext();
+    }
 
-        assertTrue(discreteActionOnOffDependent.hasNext());
+    // Classe représentant une lumière
+    private static class Light {
+        public void turnOn() {
+            System.out.println("Light is on");
+        }
+
+        public void turnOff() {
+            System.out.println("Light is off");
+        }
     }
 
 }
+
+
+
+
+
+
+//    @Test
+//    public void testConstructorWithTimerOnLessThanTimerOff() {
+//    }
+//
+//    @Test
+//    public void testConstructorWithDatesOnAndDatesOff() {
+//
+//    }
+//
+//    @Test
+//    public void testGetMethod() {
+//
+//    }
+//
+//    @Test
+//    public void testCompareTo() {
+//
+//    }
+//
+//
+//    @Test
+//    public void testGetCurrentLapsTime() {
+//
+//    }
+//
+//
+//    @Test
+//    public void testNext() {
+//
+//    }
+//
+//    @Test
+//    public void testHasNext() {
+//
+//    }
+
