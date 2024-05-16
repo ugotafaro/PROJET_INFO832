@@ -1,6 +1,7 @@
 package action;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,25 +23,32 @@ public class DiscreteAction implements DiscreteActionInterface {
 	
 	private Logger logger;
 
-	// Constructor
-	
 	private DiscreteAction() {
 			this.logger = Logger.getLogger("DAS");
 			this.logger.setLevel(Level.ALL);
 			this.logger.setUseParentHandlers(true);
 	}
-	
-	public DiscreteAction(Object o, String m, Timer timmer){
+
+	/**
+	 * Constructs a new DiscreteAction with the specified object, method, and timer.
+	 *
+	 * @param object The object on which the method will be invoked.
+	 * @param method The name of the method to be invoked on the object.
+	 * @param timer  The timer that provides the next lapsTime for this DiscreteAction.
+	 *
+	 * The constructor attempts to get the declared method from the object's class using reflection.
+	 * If the method does not exist, it prints the stack trace of the exception.
+	 */
+	public DiscreteAction(Object object, String method, Timer timer){
 		this();
-		this.object = o;
+		this.object = object;
 		try{	
-			this.method = o.getClass().getDeclaredMethod(m, new Class<?>[0]);
+			this.method = object.getClass().getDeclaredMethod(method);
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		this.timmer = timmer;
-		//this.updateTimeLaps();
+		this.timer = timer;
 	}
 
 	/**
@@ -55,18 +63,18 @@ public class DiscreteAction implements DiscreteActionInterface {
 	public void spendTime(int timeSpent) {
 		Integer old = this.lapsTime;
 		if(this.lapsTime != null) {
-			this.lapsTime -= t;
+			this.lapsTime -= timeSpent;
 		}
 		this.logger.log(Level.FINE, "[DA] operate spendTime on  " + this.getObject().getClass().getName() + ":" + this.getObject().hashCode() + ": old time " + old + " new time " + this.getCurrentLapsTime());
 	}
 
 	/**
-	 * Compare cette action discrète à une autre action discrète.
+	 * Compares this discrete action to another discrete action.
 	 *
-	 * @param c L'action discrète à comparer avec cette action discrète.
-	 * @return Un entier négatif si le temps d'attente de cette action discrète est inférieur à celui de l'action discrète passée en paramètre,
-	 * un entier positif si le temps d'attente de cette action discrète est supérieur à celui de l'action discrète passée en paramètre,
-	 * et zéro si les deux temps d'attente sont égaux.
+	 * @param c The discrete action to be compared with this discrete action.
+	 * @return A negative integer if the waiting time of this discrete action is less than that of the passed discrete action,
+	 * a positive integer if the waiting time of this discrete action is greater than that of the passed discrete action,
+	 * and zero if both waiting times are equal.
 	 */
 	public int compareTo(DiscreteActionInterface c) {
 		if (this.lapsTime == null) { // no lapstime is equivalent to infinity 
@@ -88,8 +96,12 @@ public class DiscreteAction implements DiscreteActionInterface {
 	}
 
 
-	}
-
+	/**
+	 * Updates the current lapsTime of this DiscreteAction to the next value provided by the timer.
+	 * Logs the old and new lapsTime values, and returns the updated DiscreteAction.
+	 *
+	 * @return The updated DiscreteAction with the new lapsTime.
+	 */
 	public DiscreteActionInterface next() {
 		Integer old = this.lapsTime;
 		this.lapsTime = this.timer.next();
@@ -103,16 +115,17 @@ public class DiscreteAction implements DiscreteActionInterface {
 		return this;
 	}
 
+	/**
+	 * Checks if there is a next timelapse available for this DiscreteAction.
+	 *
+	 * @return true if the timer is not null and has a next timelapse, false otherwise.
+	 */
 	public boolean hasNext() {
-		Boolean more=false;
-		if (this.timmer != null && this.timmer.hasNext()) {
-			more = true;
-		}/*else if (this.dates != null) {
-			more = !this.dates.isEmpty();
-		}else if (this.lapsTimes != null) {
-			more = !this.lapsTimes.isEmpty();
-		}*/
-		return more;		
+		Boolean hasNext = false;
+		if (this.timer != null && this.timer.hasNext()) {
+			hasNext = true;
+		}
+		return hasNext;
 	}
 
 	public void setLapsTime(Integer timer){
