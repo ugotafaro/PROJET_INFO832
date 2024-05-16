@@ -28,7 +28,6 @@ public interface DiscreteActionInterface extends Comparable<DiscreteActionInterf
 	 */
 	public Object getObject();
 
-	// COMPARAISON
 	/*
 	 * compare discrete action according to the time before execution
 	 * 
@@ -46,5 +45,5 @@ public interface DiscreteActionInterface extends Comparable<DiscreteActionInterf
 	 * (non-Javadoc)
 	 * @see java.util.Iterator#hasNext()
 	 */
-	//public boolean hasNext();
+	public boolean hasNext();
 }
