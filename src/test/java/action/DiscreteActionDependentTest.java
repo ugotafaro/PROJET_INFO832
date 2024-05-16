@@ -6,6 +6,7 @@ import timer.DateTimer;
 import timer.Timer;
 
 import java.lang.reflect.Method;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,7 +49,6 @@ class DiscreteActionDependentTest {
 
     @Test // TEST 1 & 2
     void testNextMethodAffirmation() {
-
         actionDependent.addDependence(word, method, dt2);
         actionDependent.nextMethod();
         DiscreteAction ds = new DiscreteAction(word, method, dt2);
@@ -61,20 +61,18 @@ class DiscreteActionDependentTest {
     }
 
     @Test // TEST 3
-    void testNextMethodLimit1() {
-        actionDependent.depedentActions.clear();
-        actionDependent.depedentActions.add(new DiscreteAction("h", method, dt2));
-//        actionDependent.depedentActions.first().setLapsTime(10);
+    void testNextMethod1Element() {
         DiscreteAction currentActionBefore = actionDependent.currentAction;
         actionDependent.nextMethod();
         assertEquals(currentActionBefore, actionDependent.currentAction);
     }
-
     @Test // TEST 4
-    void testNextMethodLimit() {
-        actionDependent.depedentActions.clear();
+    void testNextMethodWhenCurrentActionIsNeitherBaseNorLastAction() {
+        actionDependent.addDependence("Hello", method, dt1);
+        DiscreteAction action = new DiscreteAction("Hellooo", method, dt1);
+        actionDependent.depedentActions.add(action);
         actionDependent.nextMethod();
-        assertEquals(actionDependent.baseAction, actionDependent.currentAction);
+        assertEquals(action, actionDependent.currentAction);
     }
 
     @Test // TEST 1
@@ -121,7 +119,9 @@ class DiscreteActionDependentTest {
 
     @Test // TEST 3
     void testHasNextBaseActionHasNoNextAndEmpty() {
+        actionDependent.depedentActions.clear();
         boolean result = actionDependent.hasNext();
+        assertTrue(actionDependent.depedentActions.size()==0);
         assertFalse(result);
     }
 

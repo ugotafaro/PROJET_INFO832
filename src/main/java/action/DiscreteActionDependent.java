@@ -30,6 +30,7 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	public DiscreteActionDependent(Object o, String baseMethodName, Timer timerBase){
 		this.baseAction = new DiscreteAction(o, baseMethodName, timerBase);
 		this.depedentActions = new TreeSet<>();
+		this.depedentActions.add(this.baseAction);
 		this.it = this.depedentActions.iterator();
 		this.currentAction = this.baseAction;
 	}
@@ -172,7 +173,7 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	}
 
 	public boolean hasNext() {
-		return this.baseAction.hasNext() || !this.depedentActions.isEmpty();		
+		return !this.depedentActions.isEmpty();
 	}
 
 }
