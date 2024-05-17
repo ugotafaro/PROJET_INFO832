@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,19 +17,19 @@ class LogFormatterTest {
     void setUp() {
     }
 
-//    @Test
-//    public void testFormatValidLogRecord() {
-//        LogFormatter formatter = new LogFormatter();
-//
-//        LogRecord rec = new LogRecord(Level.INFO, "Test message");
-//        rec.setMillis(1630425600000L); // Timestamp du LogRecord
-//
-//        String expectedMessage = "2021.08.31 18:00:00.00: INFO\nTest message\n";
-//
-//        String formattedMessage = formatter.format(rec);
-//
-//        assertEquals(expectedMessage, formattedMessage);
-//    }
+    @Test
+    public void testFormatValidLogRecord() {
+        LogFormatter formatter = new LogFormatter();
+
+        LogRecord rec = new LogRecord(Level.INFO, "Test message");
+        rec.setMillis(1630425600000L); // Timestamp du LogRecord
+
+        String expectedMessage = "2021.08.31 18:00:00.00: INFO\nTest message\n";
+
+        String formattedMessage = formatter.format(rec);
+
+        assertEquals(expectedMessage, formattedMessage);
+    }
 
     @Test
     public void testFormatNullLogRecord() {
@@ -42,20 +43,19 @@ class LogFormatterTest {
     }
 
 
+    @Test
+    public void testFormatNullMessage() {
+        LogFormatter formatter = new LogFormatter();
 
-//    @Test
-//    public void testFormatNullMessage() {
-//        LogFormatter formatter = new LogFormatter();
-//
-//        LogRecord rec = new LogRecord(Level.INFO, null);
-//        rec.setMillis(1630425600000L); // Timestamp du LogRecord
-//
-//        String expectedMessage = "2021.08.31 18:00:00.00: INFO\nnull\n";
-//
-//        String formattedMessage = formatter.format(rec);
-//
-//        assertEquals(expectedMessage, formattedMessage);
-//    }
+        LogRecord rec = new LogRecord(Level.INFO, null);
+        rec.setMillis(1630425600000L); // Timestamp du LogRecord
+
+        String expectedMessage = "2021.08.31 18:00:00.00: INFO\nnull\n";
+
+        String formattedMessage = formatter.format(rec);
+
+        assertEquals(expectedMessage, formattedMessage);
+    }
 
     @Test
     public void testCalcDateValidDate() {
