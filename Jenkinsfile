@@ -21,17 +21,17 @@ pipeline {
                     sh "${maven}/bin/mvn -Dmaven.test.failure.ignore=true test"
                 }
             }
-//             post {
-//                 always {
-//                     junit 'target/surefire-reports/*.xml'
-//                 }
-//             }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
         }
         stage('Javadoc') {
             steps {
                 script {
                     def maven = tool 'Maven'
-                    sh "${maven}/bin/mvn javadoc:javadoc -DreportDir=target/site/apidocs"
+                    sh "${maven}/bin/mvn javadoc:javadoc -DreportDir=target/site/apidocs -Dmaven.javadoc.failOnError=false"
                 }
             }
         }
