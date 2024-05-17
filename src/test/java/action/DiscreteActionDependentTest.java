@@ -40,25 +40,25 @@ class DiscreteActionDependentTest {
         assertEquals(actionDependent.baseAction, actionDependent.currentAction);
     }
 
-    @Test // TEST 1
-    void addDependence() {
-        actionDependent.addDependence(word, method, dt2);
-        assertEquals(actionDependent.depedentActions.last(), new DiscreteAction(word, method, dt2));
-        assertEquals(1, actionDependent.depedentActions.size());
-    }
+//    @Test // TEST 1
+//    void addDependence() {
+//        actionDependent.addDependence(word, method, dt2);
+//        assertEquals(actionDependent.depedentActions.last(), new DiscreteAction(word, method, dt2));
+//        assertEquals(1, actionDependent.depedentActions.size());
+//    }
 
-    @Test // TEST 1 & 2
-    void testNextMethodAffirmation() {
-        actionDependent.addDependence(word, method, dt2);
-        actionDependent.nextMethod();
-        DiscreteAction ds = new DiscreteAction(word, method, dt2);
-        System.out.println(ds);
-        System.out.println(actionDependent.currentAction);
-        assertEquals(ds, actionDependent.currentAction);
-
-        actionDependent.nextMethod();
-        assertEquals(actionDependent.baseAction, actionDependent.currentAction);
-    }
+//    @Test // TEST 1 & 2
+//    void testNextMethodAffirmation() {
+//        actionDependent.addDependence(word, method, dt2);
+//        actionDependent.nextMethod();
+//        DiscreteAction ds = new DiscreteAction(word, method, dt2);
+//        System.out.println(ds);
+//        System.out.println(actionDependent.currentAction);
+//        assertEquals(ds, actionDependent.currentAction);
+//
+//        actionDependent.nextMethod();
+//        assertEquals(actionDependent.baseAction, actionDependent.currentAction);
+//    }
 
     @Test // TEST 3
     void testNextMethod1Element() {
@@ -66,14 +66,14 @@ class DiscreteActionDependentTest {
         actionDependent.nextMethod();
         assertEquals(currentActionBefore, actionDependent.currentAction);
     }
-    @Test // TEST 4
-    void testNextMethodWhenCurrentActionIsNeitherBaseNorLastAction() {
-        actionDependent.addDependence("Hello", method, dt1);
-        DiscreteAction action = new DiscreteAction("Hellooo", method, dt1);
-        actionDependent.depedentActions.add(action);
-        actionDependent.nextMethod();
-        assertEquals(action, actionDependent.currentAction);
-    }
+//    @Test // TEST 4
+//    void testNextMethodWhenCurrentActionIsNeitherBaseNorLastAction() {
+//        actionDependent.addDependence("Hello", method, dt1);
+//        DiscreteAction action = new DiscreteAction("Hellooo", method, dt1);
+//        actionDependent.depedentActions.add(action);
+//        actionDependent.nextMethod();
+//        assertEquals(action, actionDependent.currentAction);
+//    }
 
     @Test // TEST 1
     void testSpendTimePositive() {

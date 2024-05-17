@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     def maven = tool 'Maven'
-                    sh "test -f pom.xml"
+                    sh "${maven}/bin/mvn test"
                 }
             }
 //             post {
@@ -26,7 +26,6 @@ pipeline {
 //                     junit 'target/surefire-reports/*.xml'
 //                 }
 //             }
-
         }
         stage('Javadoc') {
             steps {
