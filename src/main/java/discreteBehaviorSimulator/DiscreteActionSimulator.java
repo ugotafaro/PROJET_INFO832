@@ -72,7 +72,15 @@ public class DiscreteActionSimulator implements Runnable {
 			this.step = -1;
 		}
 	}
-	
+
+
+	/**
+	 * Adds a new action to the list of actions to be executed.
+	 * The action is only added if it has a next action in its sequence.
+	 * After adding the action, the list of actions is sorted for ordered execution.
+	 *
+	 * @param c The action to be added to the list.
+	 */
 	public void addAction(DiscreteActionInterface c){
 
 		if(c.hasNext()) {
@@ -84,9 +92,7 @@ public class DiscreteActionSimulator implements Runnable {
 		}
 	}
 	
-	/*public void addTemporalRule(TemporalRule r){
-		
-	}*/
+
 
 	/**
 	 * @return the laps time before the next action
@@ -142,6 +148,11 @@ public class DiscreteActionSimulator implements Runnable {
 
 		return sleepTime;
 	}
+
+	/**
+	 * Update the time of all actions
+	 * @param runningTimeOf1stCapsul
+	 */
 	private void updateTimes(int runningTimeOf1stCapsul){
 		
 		// update time laps off all actions
@@ -151,20 +162,7 @@ public class DiscreteActionSimulator implements Runnable {
 			this.actionsList.get(i).spendTime(runningTimeOf1stCapsul);
 		}
 
-		// get new time lapse of first action
-		/*if(this.globalTime == null) {
-			this.actionsList.get(0).updateTimeLaps();
-		}else {	
-			this.actionsList.get(0).updateTimeLaps(this.globalTime.getTime());
-		}
-		
-		// remove the action if no more lapse time is defined
-		if(this.actionsList.get(0).getLastLapsTime() == null) {
-			this.actionsList.remove(0);
-		}else {
-			// resort the list
-			Collections.sort(this.actionsList);
-		}*/
+
 
 		DiscreteActionInterface a = this.actionsList.remove(0);
 		if(a.hasNext()) {
@@ -182,6 +180,12 @@ public class DiscreteActionSimulator implements Runnable {
 	}
 
 
+	/**
+	 * Executes the simulation of discrete actions.
+	 * The simulation runs in a loop until it is stopped or until the specified number of loops is reached.
+	 * In each loop, the next action is executed and the times of all actions are updated.
+	 * If there are no actions to execute, the simulation is stopped.
+	 */
 	public void run() {
 		int count = this.nbLoop;
 		boolean finished = false;
@@ -222,6 +226,14 @@ public class DiscreteActionSimulator implements Runnable {
 		}
 	}
 
+	/**
+	 * Starts the simulation of discrete actions.
+	 * This method checks if there are actions to be executed in the actionsList.
+	 * If the actionsList is empty, it throws an IllegalStateException.
+	 * Otherwise, it sets the running flag to true and starts the simulation thread.
+	 *
+	 * @throws IllegalStateException if there are no actions to run.
+	 */
 	public void start(){
 		if (actionsList.isEmpty()) {
 			throw new IllegalStateException("No action to run");
@@ -230,11 +242,18 @@ public class DiscreteActionSimulator implements Runnable {
 		this.t.start();
 	}
 
+	/**
+	 * Stops the simulation of discrete actions.
+	 * This method sets the running flag to false, which stops the simulation thread.
+	 */
 	public void stop(){
 		System.out.println("STOP THREAD " + t.getName() + "obj " + this);
 		this.running = false;
 	}
-	
+
+	/**
+	 * @return the running status of the simulation
+	 */
 	public String toString(){
 		StringBuffer toS = new StringBuffer("------------------\nTestAuto :" + this.actionsList.size());
 		for(DiscreteActionInterface c : this.actionsList){

@@ -10,7 +10,6 @@ import timer.Timer;
  * @author flver
  *
  */
-//TODO Must be refactored to be generic
 public class DiscreteActionDependent implements DiscreteActionInterface {
 	
 	protected DiscreteAction baseAction;
@@ -52,10 +51,9 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	 * This method iterates over all dependent actions and updates their time lapses.
 	 */
 	private void reInit() {
-		//this.baseAction.updateTimeLaps();
 		for (Iterator<DiscreteAction> iter = this.depedentActions.iterator(); iter.hasNext(); ) {
 		    DiscreteAction element = iter.next();
-		    //element.updateTimeLaps();
+
 		}
 
 	}
@@ -92,9 +90,7 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	}
 
 	public void updateTimeLaps() {
-		// time laps is updated at the re-initialization
-		// this.currentAction.updateTimeLaps();
-		this.nextMethod();	
+		this.nextMethod();
 	}
 
 	public Method getMethod() {
@@ -117,8 +113,14 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 		return !this.hasNext();
 	}
 
+
+	/**
+	 * Returns the next DiscreteActionInterface in the sequence of dependent actions.
+	 * This method retrieves the method and object of the current action and returns the current DiscreteActionDependent instance.
+	 *
+	 * @return The current DiscreteActionDependent instance.
+	 */
 	public DiscreteActionInterface next() {
-		//Integer lapsTime = this.getNextLapsTime();
 		Method method = this.getMethod();
 		Object object = this.getObject();
 		return this;

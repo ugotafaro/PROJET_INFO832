@@ -9,7 +9,15 @@ public class DateTimer  implements Timer {
 
 	Vector<Integer> lapsTimes;
 	Iterator<Integer> it;
-	
+
+	/**
+	 * Constructs a new DateTimer with the given dates.
+	 * This constructor initializes the lapsTimes vector and sets the current time to 0.
+	 * It then iterates over the given dates, calculating the difference between the current and last date, and adds this difference to the lapsTimes vector.
+	 * Finally, it initializes the iterator for the lapsTimes vector.
+	 *
+	 * @param dates The TreeSet of dates to be used for initializing the DateTimer.
+	 */
 	public DateTimer(TreeSet<Integer> dates) {
 		this.lapsTimes = new Vector<Integer>();
 		Integer last;
@@ -24,7 +32,15 @@ public class DateTimer  implements Timer {
 		this.it = this.lapsTimes.iterator();
 
 	}
-	
+
+	/**
+	 * Constructs a new DateTimer with the given lapsTimes.
+	 * This constructor initializes the lapsTimes vector and sets the current time to 0.
+	 * It then iterates over the given lapsTimes, adding each time to the lapsTimes vector.
+	 * Finally, it initializes the iterator for the lapsTimes vector.
+	 *
+	 * @param lapsTimes The Vector of lapsTimes to be used for initializing the DateTimer.
+	 */
 	public DateTimer(Vector<Integer> lapsTimes) {
 		this.lapsTimes = new Vector<Integer>(lapsTimes);
 		this.it = this.lapsTimes.iterator();

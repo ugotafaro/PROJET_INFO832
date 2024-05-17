@@ -32,7 +32,6 @@ class ClockTest {
         Clock thirdInstance = Clock.getInstance();
         assertNotNull(thirdInstance, "Third instance should not be null");
 
-        // Check if the third instance is also the same as the first and second instances
         assertSame(firstInstance, thirdInstance, "All instances should be the same (singleton pattern)");
 
 
@@ -79,7 +78,7 @@ class ClockTest {
 
         clock.removeObserver(observer);
 
-        // assertFalse(clock.getObservers().contains(observer), "The observer should be removed from the observers list");
+        assertFalse(clock.getObservers().contains(observer), "The observer should be removed from the observers list");
 
 
         Clock clock = Clock.getInstance();
@@ -96,13 +95,13 @@ class ClockTest {
             }
         };
 
-        // int initialObserverCount = clock.getObservers().size();
+        int initialObserverCount = clock.getObservers().size();
 
         clock.removeObserver(fakeObserver);
 
-        // int finalObserverCount = clock.getObservers().size();
+        int finalObserverCount = clock.getObservers().size();
 
-        //assertEquals(initialObserverCount, finalObserverCount, "La taille de la liste des observateurs devrait rester la même après avoir tenté de supprimer un observer non présent.");
+        assertEquals(initialObserverCount, finalObserverCount, "La taille de la liste des observateurs devrait rester la même après avoir tenté de supprimer un observer non présent.");
 
     }
 
@@ -129,7 +128,7 @@ class ClockTest {
 
         clock.setNextJump(5);
 
-        //assertEquals(5, clock.getNextJump(), "The nextJump attribute should be set to 5");
+        assertEquals(5, clock.getNextJump(), "The nextJump attribute should be set to 5");
 
 
     }
@@ -182,25 +181,6 @@ class ClockTest {
 
     }
 
-    @Test
-    void lockReadAccess() {
-    }
-
-    @Test
-    void unlockReadAccess() {
-    }
-
-    @Test
-    void lockWriteAccess() {
-    }
-
-    @Test
-    void unlockWriteAccess() {
-    }
-
-    @Test
-    void testToString() {
-    }
 
     private static class TestObserver implements ClockObserver {
         private int observedTime;

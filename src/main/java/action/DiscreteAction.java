@@ -13,7 +13,6 @@ import timer.Timer;
  *
  */
 
-// TODO must inherit from Action
 public class DiscreteAction implements DiscreteActionInterface {
 	private Object object;
 	private Method method;
@@ -164,6 +163,13 @@ public class DiscreteAction implements DiscreteActionInterface {
 		return Objects.hash(object, method, timer);
 	}
 
+	/**
+	 * Compares this DiscreteAction to the specified object.
+	 * The result is true if and only if the argument is not null and is a DiscreteAction object that has the same object, method, and timer as this object.
+	 *
+	 * @param obj The object to compare this DiscreteAction against.
+	 * @return true if the given object represents a DiscreteAction equivalent to this DiscreteAction, false otherwise.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
