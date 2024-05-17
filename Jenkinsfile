@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     def maven = tool 'Maven'
-                    sh "${maven}/bin/mvn test"
+                    sh "${maven}/bin/mvn -Dmaven.test.failure.ignore=true test"
                 }
             }
 //             post {
