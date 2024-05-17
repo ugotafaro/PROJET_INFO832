@@ -1,8 +1,8 @@
 package action;
 
 import java.lang.reflect.Method;
-import java.util.TreeSet;
-import java.util.Vector;
+import java.util.SortedSet;
+
 
 import timer.DateTimer;
 import timer.Timer;
@@ -20,7 +20,7 @@ public class DiscreteActionOnOffDependent implements DiscreteActionInterface {
 	protected DiscreteActionInterface offAction;
 	protected DiscreteActionInterface currentAction;
 
-	private Integer currentLapsTime;
+	Integer currentLapsTime;
 	private Integer lastOffDelay=0;
 
 	/**
@@ -51,55 +51,15 @@ public class DiscreteActionOnOffDependent implements DiscreteActionInterface {
 	 * @param off Name of the method for Off action.
 	 * @param datesOff TreeSet of dates for Off action.
 	 */
-	public DiscreteActionOnOffDependent(Object o, String on, TreeSet<Integer> datesOn, String off, TreeSet<Integer> datesOff){
-		this.onAction = new DiscreteAction(o, on, new DateTimer(datesOn));
-		this.offAction = new DiscreteAction(o, off, new DateTimer(datesOff));
+	public DiscreteActionOnOffDependent(Object o, String on, SortedSet<Integer> datesOn, String off, SortedSet<Integer> datesOff){
+		this.onAction = new DiscreteAction(o, on, new DateTimer( datesOn));
+		this.offAction = new DiscreteAction(o, off, new DateTimer( datesOff));
 
 		if(datesOn.first() < datesOff.first()){
 			this.currentAction = this.onAction;
 		}else{
 			this.currentAction = this.offAction;
 		}
-	}
-
-	/**
-	 * Determines the time lapse between two sets of dates.
-	 *
-	 * @param datesOn TreeSet of dates for On action.
-	 * @param datesOff TreeSet of dates for Off action.
-	 * @param timeLapseOn Vector to store time lapse for On action.
-	 * @param timeLapseOff Vector to store time lapse for Off action.
-	 */
-	private void dates2Timalapse(TreeSet<Integer> datesOn, TreeSet<Integer> datesOff, Vector<Integer> timeLapseOn, Vector<Integer> timeLapseOff) {
-		Vector<Integer> currentTimeLapse;
-		TreeSet<Integer> currentDates;
-		Integer date=0;
-		if(datesOn.first()<datesOff.first()) {
-			currentTimeLapse = timeLapseOn;
-			currentDates = datesOn;
-		}else {
-			currentTimeLapse = timeLapseOff;
-			currentDates = datesOff;
-		}
-		Integer nextDate;
-
-		while(datesOn.size()>0 || datesOff.size()>0) {
-			nextDate = currentDates.first();
-
-			currentTimeLapse.add(nextDate - date);
-			currentDates.remove(nextDate);
-
-			date = nextDate;
-
-			if(currentDates == datesOn) {
-				currentDates = datesOff;
-				currentTimeLapse = timeLapseOff;
-			}else {
-				currentDates = datesOn;
-				currentTimeLapse = timeLapseOn;
-			}
-		}
-
 	}
 
 	/**

@@ -1,11 +1,9 @@
-package discreteBehaviorSimulator;
+package discrete_behavior_simulator;
 
 import action.DiscreteAction;
-import action.DiscreteActionInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import timer.DateTimer;
-import timer.RandomTimer;
 
 import java.util.Arrays;
 import java.util.TreeSet;

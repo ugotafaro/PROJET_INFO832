@@ -55,7 +55,7 @@ class DiscreteActionTest {
         discreteAction.setLapsTime(4);
 
         discreteAction.spendTime(1);
-        assertEquals(3, discreteAction.getLapsTime());
+        assertEquals(3, discreteAction.getCurrentLapsTime());
     }
     @Test // TEST 2.2 spendTime limite si c'est null
     public void testSpendTime2() {
@@ -77,7 +77,7 @@ class DiscreteActionTest {
         discreteAction.spendTime(0);
 
 
-        assertEquals(4, discreteAction.getLapsTime());
+        assertEquals(4, discreteAction.getCurrentLapsTime());
     }
     @Test // TEST 2.3 spendTime negation si c'est negatif
     public void testSpendTime3() {
@@ -275,7 +275,7 @@ class DiscreteActionTest {
         da1.setLapsTime(4);
 
         da1.next();
-        assertEquals(10, da1.getLapsTime().intValue());
+        assertEquals(10, da1.getCurrentLapsTime().intValue());
     }
 
     @Test // test 5.1 hasNext

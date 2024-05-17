@@ -24,7 +24,7 @@ public class PeriodicTimer implements Timer {
 	 * @param moreOrLess the RandomTimer instance used to adjust the period
 	 * @deprecated Use {@link MergedTimer} instead.
 	 */
-	@Deprecated
+	@Deprecated(since = "1.2", forRemoval = true)
 	public PeriodicTimer(int at, RandomTimer moreOrLess) {
 		this.period = at;
 		this.moreOrLess = moreOrLess;
@@ -55,7 +55,7 @@ public class PeriodicTimer implements Timer {
 	 * @param moreOrLess the RandomTimer instance used to adjust the period
 	 * @deprecated Use {@link MergedTimer} instead.
 	 */
-	@Deprecated
+	@Deprecated(since = "1.2", forRemoval = true)
 	public PeriodicTimer(int period, int at, RandomTimer moreOrLess) {
 		this.period = period;
 		this.moreOrLess = moreOrLess;
@@ -81,7 +81,7 @@ public class PeriodicTimer implements Timer {
 	 */
 	@Override
 	public Integer next() {
-		int next =  this.next;
+		int nextTime = this.next;
 
 		if(this.moreOrLess != null) {
 			this.next = this.period + Math.abs((int)(this.moreOrLess.next() - this.moreOrLess.getMean()));
@@ -89,9 +89,8 @@ public class PeriodicTimer implements Timer {
 			this.next = this.period;
 		}
 
-		return next;
+		return nextTime;
 	}
-
 
 
 

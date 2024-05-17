@@ -1,7 +1,9 @@
 package timer;
 
 import java.util.Random;
-import java.util.Vector;
+
+
+import static java.lang.Enum.valueOf;
 
 /**
  * @author Flavien Vernier
@@ -20,11 +22,11 @@ public class RandomTimer implements Timer {
 	 * - POSIBILIST: A posibilist distribution, used to model situations where outcomes are evenly spread between a lower and upper limit.
 	 * - GAUSSIAN: A Gaussian (or normal) distribution, used to model random variables that are the result of many independent factors.
 	 */
-	public static enum randomDistribution {
+	public enum randomDistribution {
 		POISSON, EXP, POSIBILIST, GAUSSIAN;
 	}
 	
-	//private static String randomDistributionString[] = {"POISSON", "EXP", "POSIBILIST", "GAUSSIAN"};
+
 	
 	private Random r = new Random();
 	private randomDistribution distribution;
@@ -32,7 +34,7 @@ public class RandomTimer implements Timer {
 	private double mean;
 	private double lolim;
 	private double hilim; 
-	//private int width; 
+
 
 
 	/**
@@ -44,7 +46,7 @@ public class RandomTimer implements Timer {
 	 * @throws IllegalArgumentException if the provided string does not match any randomDistribution value
 	 */
 	public static randomDistribution string2Distribution(String distributionName){
-		return RandomTimer.randomDistribution.valueOf(RandomTimer.randomDistribution.class, distributionName.toUpperCase());
+		return valueOf(RandomTimer.randomDistribution.class, distributionName.toUpperCase());
 	}
 
 	/**
@@ -56,7 +58,11 @@ public class RandomTimer implements Timer {
 	public static String distribution2String(randomDistribution distribution){
 		return distribution.name();
 	}
-
+	public class InvalidDistributionException extends Exception {
+		public InvalidDistributionException(String message) {
+			super(message);
+		}
+	}
 	/**
 	 * Constructs a RandomTimer with a specific distribution and a parameter.
 	 * If the distribution is EXP, the rate is set to the provided parameter and the mean is calculated as the reciprocal of the rate.
@@ -68,21 +74,21 @@ public class RandomTimer implements Timer {
 	 * @param param the parameter for the distribution
 	 * @throws Exception if the provided distribution is not EXP or POISSON
 	 */
-	public RandomTimer(randomDistribution distribution, double param) throws Exception{
+	public RandomTimer(randomDistribution distribution, double param) throws InvalidDistributionException {
 		if(distribution == randomDistribution.EXP ){
 			this.distribution = distribution;
 			this.rate = param;
 			this.mean = 1/param;
 			this.lolim = 0;
 			this.hilim = Double.POSITIVE_INFINITY;
-		}else if(distribution == randomDistribution.POISSON){
+		} else if(distribution == randomDistribution.POISSON){
 			this.distribution = distribution;
 			this.rate = Double.NaN;
 			this.mean = param;
 			this.lolim = 0;
 			this.hilim = Double.POSITIVE_INFINITY;
-		}else{
-			throw new Exception("Bad Timer constructor for selected distribution");
+		} else {
+			throw new InvalidDistributionException("Bad Timer constructor for selected distribution");
 		}
 	}
 
@@ -97,15 +103,15 @@ public class RandomTimer implements Timer {
 	 * @param hilim the upper limit for the distribution
 	 * @throws Exception if the provided distribution is not POSIBILIST or GAUSSIAN
 	 */
-	public RandomTimer(randomDistribution distribution, double lolim, double hilim) throws Exception{
+	public RandomTimer(randomDistribution distribution, double lolim, double hilim) throws InvalidDistributionException {
 		if(distribution == randomDistribution.POSIBILIST || distribution == randomDistribution.GAUSSIAN){
 			this.distribution = distribution;
 			this.mean = lolim + (hilim - lolim)/2;
 			this.rate = Double.NaN;
 			this.lolim = lolim;
 			this.hilim = hilim;
-		}else{
-			throw new Exception("Bad Timer constructor for selected distribution");
+		} else {
+			throw new InvalidDistributionException("Bad Timer constructor for selected distribution");
 		}
 	}
 
@@ -191,17 +197,6 @@ public class RandomTimer implements Timer {
 		return -1; // Theoretically impossible !!!
 	}
 	
-	/*
-	 * Equivalent to methodInvocator.RandomTimer#next()
-	 * 
-	 * @param since has no effect
-	 * 
-	 * @see methodInvocator.RandomTimer#next(int)
-	 */
-	/*@Override
-	public Integer next(int since){
-		return this.next();
-	}*/
 
 	/**
 	 * Returns the next random time according to the posibilist distribution.
@@ -234,15 +229,14 @@ public class RandomTimer implements Timer {
 	 * @return the next random time
 	 */
 	private int nextTimePoisson() {
-	    
-	    double L = Math.exp(-this.mean);
-	    int k = 0;
-	    double p = 1.0;
-	    do {
-	        p = p * this.r.nextDouble();
-	        k++;
-	    } while (p > L);
-	    return k - 1;
+		double lambda = Math.exp(-this.mean);
+		int k = 0;
+		double p = 1.0;
+		do {
+			p = p * this.r.nextDouble();
+			k++;
+		} while (p > lambda);
+		return k - 1;
 	}
 
 

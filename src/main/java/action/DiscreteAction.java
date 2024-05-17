@@ -81,22 +81,21 @@ public class DiscreteAction implements DiscreteActionInterface {
 	 * and zero if both waiting times are equal.
 	 */
 	public int compareTo(DiscreteActionInterface c) {
-		if (this.lapsTime == null) { // no lapstime is equivalent to infinity 
+		if (this.lapsTime == null) { // no lapstime is equivalent to infinity
 			return 1;
 		}
-		if (c.getCurrentLapsTime() == null) {// no lapstime is equivalent to infinity 
+		if (c.getCurrentLapsTime() == null) {// no lapstime is equivalent to infinity
 			return -1;
 		}
-    	if(this.lapsTime > c.getCurrentLapsTime()){
-    		return 1;
-    	}
-    	if(this.lapsTime < c.getCurrentLapsTime()){
-    		return -1;
-    	}
-		if(this.lapsTime == c.getCurrentLapsTime()){
+		if(this.lapsTime.equals(c.getCurrentLapsTime())){
 			return 0;
 		}
-		return 0;
+		else if(this.lapsTime > c.getCurrentLapsTime()){
+			return 1;
+		}
+		else {
+			return -1;
+		}
 	}
 
 
@@ -134,10 +133,6 @@ public class DiscreteAction implements DiscreteActionInterface {
 
 	public void setLapsTime(Integer timer){
 		this.lapsTime = timer;
-	}
-
-	public Integer getLapsTime() {
-		return lapsTime;
 	}
 
 	public Method getMethod(){

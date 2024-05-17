@@ -1,13 +1,11 @@
 package timer;
 
-import java.util.Iterator;
-import java.util.TreeSet;
-import java.util.Vector;
+import java.util.*;
 
 public class DateTimer  implements Timer {
 
 
-	Vector<Integer> lapsTimes;
+	List<Integer> lapsTimes;
 	Iterator<Integer> it;
 
 	/**
@@ -18,21 +16,19 @@ public class DateTimer  implements Timer {
 	 *
 	 * @param dates The TreeSet of dates to be used for initializing the DateTimer.
 	 */
-	public DateTimer(TreeSet<Integer> dates) {
-		this.lapsTimes = new Vector<Integer>();
+	public DateTimer(SortedSet<Integer> dates) {
+		this.lapsTimes = new Vector<>();
 		Integer last;
-		Integer current=0;
-		
+		Integer current = 0;
+
 		Iterator<Integer> itr = dates.iterator();
 		while (itr.hasNext()) {
 			last = current;
 			current = itr.next();
-			this.lapsTimes.add(current-last);
+			this.lapsTimes.add(current - last);
 		}
 		this.it = this.lapsTimes.iterator();
-
 	}
-
 	/**
 	 * Constructs a new DateTimer with the given lapsTimes.
 	 * This constructor initializes the lapsTimes vector and sets the current time to 0.
@@ -41,8 +37,8 @@ public class DateTimer  implements Timer {
 	 *
 	 * @param lapsTimes The Vector of lapsTimes to be used for initializing the DateTimer.
 	 */
-	public DateTimer(Vector<Integer> lapsTimes) {
-		this.lapsTimes = new Vector<Integer>(lapsTimes);
+	public DateTimer(List<Integer> lapsTimes) {
+		this.lapsTimes = new ArrayList<>(lapsTimes);
 		this.it = this.lapsTimes.iterator();
 	}
 

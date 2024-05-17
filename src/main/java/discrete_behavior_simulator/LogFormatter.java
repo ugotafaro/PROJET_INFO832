@@ -1,11 +1,9 @@
-package discreteBehaviorSimulator;
+package discrete_behavior_simulator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 /**
@@ -26,7 +24,7 @@ public class LogFormatter  extends Formatter {
 			return "";
 		}
 
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 
 		buf.append(calcDate(rec.getMillis()));
 		buf.append(": ");
@@ -39,7 +37,7 @@ public class LogFormatter  extends Formatter {
 		buf.append(System.getProperty("line.separator"));
 		buf.append(formatMessage(rec));
 		buf.append(System.getProperty("line.separator"));
-		
+
 		return buf.toString();
 	}
 
@@ -51,10 +49,10 @@ public class LogFormatter  extends Formatter {
 	 * If millisecs is negative, the result is the string representation of a negative date.
 	 */
 	public String calcDate(long millisecs) {
-	    SimpleDateFormat date_format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SS");
-	    Date resultdate = new Date(millisecs);
-	    return date_format.format(resultdate);
-	  }
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SS");
+		Date resultdate = new Date(millisecs);
+		return dateFormat.format(resultdate);
+	}
 
 	/**
 	 * Returns an empty string as the header of the log.
@@ -62,6 +60,7 @@ public class LogFormatter  extends Formatter {
 	 * @param h the Handler for which the header string is being generated
 	 * @return an empty string. This method is intended to be overridden in subclasses.
 	 */
+	  @Override
 	  public String getHead(Handler h) {
 		  return "";
 	  }
@@ -72,9 +71,10 @@ public class LogFormatter  extends Formatter {
 	 * @param h the Handler for which the tail string is being generated
 	 * @return an empty string. This method is intended to be overridden in subclasses.
 	 */
-	  public String getTail(Handler h) {
-	    return "";
-	  }
+	 @Override
+	 public String getTail(Handler h) {
+		 return "";
+	 }
 
 
 }

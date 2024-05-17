@@ -1,4 +1,4 @@
-package discreteBehaviorSimulator;
+package discrete_behavior_simulator;
 
 public interface ClockObserver {
 	public void clockChange(int time);

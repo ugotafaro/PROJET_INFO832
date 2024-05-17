@@ -2,6 +2,7 @@ package action;
 
 import java.lang.reflect.Method;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
 import timer.Timer;
@@ -52,11 +53,11 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	 */
 	private void reInit() {
 		for (Iterator<DiscreteAction> iter = this.depedentActions.iterator(); iter.hasNext(); ) {
-		    DiscreteAction element = iter.next();
-
+			iter.next();
 		}
-
 	}
+
+
 
 	/**
 	 * Determines the next action to be executed in the sequence of dependent actions.
@@ -121,8 +122,9 @@ public class DiscreteActionDependent implements DiscreteActionInterface {
 	 * @return The current DiscreteActionDependent instance.
 	 */
 	public DiscreteActionInterface next() {
-		Method method = this.getMethod();
-		Object object = this.getObject();
+		if (!this.hasNext()) {
+			throw new NoSuchElementException("No next element in the collection");
+		}
 		return this;
 	}
 
